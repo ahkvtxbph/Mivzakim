@@ -189,7 +189,7 @@ public Boolean dropTable(int i,String site)
         WebElement industries = driver.findElement(ynetMainChat);
         List<WebElement> links = industries.findElements(cssSelector("div.titleRow   "));
         System.out.println(links.size());
-        if (dropTable(5,dbName1)) {
+        if (dropTable(5,src1)) {
             for (int i = 0; i < 5; i++) {
                 WebElement chat = links.get(i);
                 String chatDate = chat.findElement(cssSelector("div.date")).getText();
@@ -217,7 +217,7 @@ public Boolean dropTable(int i,String site)
      WebElement industriesN12 = driver.findElement(n12ChatCase);//n12ChatCase);n12ChatCase
      List<WebElement> linksN12 = industriesN12.findElements(n12SubChat);//"div.mc-message-wrap")); "div.mc-reporter__messages"
   System.out.println("linksN12 Size "+linksN12.size());
-    if (dropTable(10,dbName1)) {
+    if (dropTable(5,src2)) {
          for (int i = 0; i < 5; i++) {
              WebElement chat = linksN12.get(i);
              String chatDate = chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//mc-message-footer
