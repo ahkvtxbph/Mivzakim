@@ -36,6 +36,9 @@ public class chatTest extends BaseTest{
    String password="a72Y53vXKjhNDAJn";
    String userName="shilo";
     String h1="";
+    String dbName1="Mivzakim";
+    String src1="Ynet";
+    String src2="N12";
 
 
   private String ynetChat="https://www.ynet.co.il/news/category/184";
@@ -75,7 +78,7 @@ By n12FullChatButton=By.cssSelector("div.mc-feed.mc-feed_shown.default-root-clos
   @Before
   public void beforeTest() throws BaseTest  {
 
-      createDb();
+      createDb(dbName1);
 
   }
 
@@ -90,7 +93,7 @@ By n12FullChatButton=By.cssSelector("div.mc-feed.mc-feed_shown.default-root-clos
 
   }
 
-public  void createDb()
+public  void createDb(String site)
 {
 
     String connectionString = "mongodb+srv://shilo:a72Y53vXKjhNDAJn@chatnews.uaripa9.mongodb.net/?retryWrites=true&w=majority";
@@ -105,15 +108,14 @@ public  void createDb()
     System.out.println("Created Mongo Connection successfully");
 
     MongoClient mongoClient = MongoClients.create(connectionString);
-     db = mongoClient.getDatabase("ChatNews");
+     db = mongoClient.getDatabase(site);
 
     System.out.println("Get database is successful");
-
 }
 
-public Boolean dropTable(int i)
+public Boolean dropTable(int i,String site)
 {
-    MongoCollection<Document> collection= db.getCollection("chatNews2");
+    MongoCollection<Document> collection= db.getCollection(site);
     if (collection.countDocuments()<i)
     {
         return true;
@@ -121,19 +123,20 @@ public Boolean dropTable(int i)
     return false;
 }
 
-    public void mongoInsertData(String author,String date, String title,int count,String imageLink)
+    public void mongoInsertData(String author,String date, String title,int count,String imageLink,String site)
     {System.out.println("Shilo insert "+count+" "+author+" "+date+" "+count+" "+title+""+imageLink);
-       MongoCollection<Document> collection= db.getCollection("chatNews2");
+       MongoCollection<Document> collection= db.getCollection(site);
         InsertOneResult result = collection.insertOne(new Document()
                 .append("_id", new ObjectId())
-        //        .append("num", count)
+                .append("num", count)
                 .append("author", author)
                 .append("date_time", date)
                 .append("title", title)
                 .append("image",imageLink));
+
     }
 
-    public void mongoUpdateData(String author,String date, String title,int count,String imageLink)
+    public void mongoUpdateData(String author,String date, String title,int count,String imageLink,String site)
     {System.out.println("Shilo Update "+count+" "+author+" "+date+" "+count+" "+title+""+imageLink);
         BasicDBObject searchQuery = new BasicDBObject();
         searchQuery.append("num", count)
@@ -146,7 +149,7 @@ public Boolean dropTable(int i)
                 .append("date_time", date)
                 .append("title", title)
                 .append("image",imageLink));
-        db.getCollection("chatNews2").updateOne(searchQuery, updateQuery);
+        db.getCollection(site).updateOne(searchQuery, updateQuery);
     }
 
   public String getDate(){
@@ -186,19 +189,19 @@ public Boolean dropTable(int i)
         WebElement industries = driver.findElement(ynetMainChat);
         List<WebElement> links = industries.findElements(cssSelector("div.titleRow   "));
         System.out.println(links.size());
-        if (dropTable(5)) {
+        if (dropTable(5,dbName1)) {
             for (int i = 0; i < 5; i++) {
                 WebElement chat = links.get(i);
                 String chatDate = chat.findElement(cssSelector("div.date")).getText();
                 String chatTitle = chat.findElement(cssSelector("div.title")).getText();
-                mongoInsertData("Ynet", chatDate, chatTitle,i+1,"NULL");
+                mongoInsertData("Ynet", chatDate, chatTitle,i+1,"NULL",src1);
             }
         } else {
             for (int i = 0; i < 5; i++) {
                 WebElement chat = links.get(i);
                 String chatDate = chat.findElement(cssSelector("div.date")).getText();
                 String chatTitle = chat.findElement(cssSelector("div.title")).getText();
-                mongoUpdateData("Ynet", chatDate, chatTitle, i+1,"NULL");
+                mongoUpdateData("Ynet", chatDate, chatTitle, i+1,"NULL",src1);
             }
         }
 
@@ -214,7 +217,7 @@ public Boolean dropTable(int i)
      WebElement industriesN12 = driver.findElement(n12ChatCase);//n12ChatCase);n12ChatCase
      List<WebElement> linksN12 = industriesN12.findElements(n12SubChat);//"div.mc-message-wrap")); "div.mc-reporter__messages"
   System.out.println("linksN12 Size "+linksN12.size());
-    if (dropTable(10)) {
+    if (dropTable(10,dbName1)) {
          for (int i = 0; i < 5; i++) {
              WebElement chat = linksN12.get(i);
              String chatDate = chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//mc-message-footer
@@ -225,11 +228,11 @@ public Boolean dropTable(int i)
                  String img = linksImgN12.get(0).getAttribute("style");
                  img=img.substring(23, img.length()-3);
                  System.out.println(i+" "+chatDate+" "+chatTitle+" "+img);
-                 mongoInsertData("N12", chatDate, chatTitle,i+1, img);
+                 mongoInsertData("N12", chatDate, chatTitle,i+1, img,src2);
              }
              else {
                  System.out.println(i+" "+chatDate+" "+chatTitle+" "+"NULL");
-                 mongoInsertData("N12", chatDate, chatTitle, i+1,"NULL");
+                 mongoInsertData("N12", chatDate, chatTitle, i+1,"NULL",src2);
              }
          }
      }
@@ -246,11 +249,11 @@ public Boolean dropTable(int i)
                  String img = linksImgN12.get(0).getAttribute("style");
                  img=img.substring(23, img.length()-3);
                  System.out.println(i+" "+chatDate+" "+chatTitle+" "+img);
-                 mongoUpdateData("N12", chatDate, chatTitle,i+1,img);
+                 mongoUpdateData("N12", chatDate, chatTitle,i+1,img,src2);
              }
              else {
                  System.out.println(i+" "+chatDate+" "+chatTitle+" "+"NULL");
-                 mongoUpdateData("N12", chatDate, chatTitle,i+1,"NULL");
+                 mongoUpdateData("N12", chatDate, chatTitle,i+1,"NULL",src2);
              }
          }
      }
