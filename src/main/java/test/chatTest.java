@@ -95,7 +95,6 @@ By n12FullChatButton=By.cssSelector("div.mc-feed.mc-feed_shown.default-root-clos
 
 public  void createDb(String site)
 {
-
     String connectionString = "mongodb+srv://shilo:a72Y53vXKjhNDAJn@chatnews.uaripa9.mongodb.net/?retryWrites=true&w=majority";
     ServerApi serverApi = ServerApi.builder()
             .version(ServerApiVersion.V1)
@@ -186,21 +185,27 @@ public Boolean dropTable(int i,String site)
     public  void test01_ynetChat() throws Exception {
 
         driver.get(ynetChat);
+        String date=getDate();
+        String chatDate="";
         WebElement industries = driver.findElement(ynetMainChat);
         List<WebElement> links = industries.findElements(cssSelector("div.titleRow   "));
         System.out.println(links.size());
         if (dropTable(5,src1)) {
             for (int i = 0; i < 5; i++) {
                 WebElement chat = links.get(i);
-                String chatDate = chat.findElement(cssSelector("div.date")).getText();
+                String chatTime = chat.findElement(cssSelector("div.date")).getText();
                 String chatTitle = chat.findElement(cssSelector("div.title")).getText();
+                chatDate=date+" "+chatTime;
+                System.out.println("chatDate "+chatDate);
                 mongoInsertData("Ynet", chatDate, chatTitle,i+1,"NULL",src1);
             }
         } else {
             for (int i = 0; i < 5; i++) {
                 WebElement chat = links.get(i);
-                String chatDate = chat.findElement(cssSelector("div.date")).getText();
+                String chatTime = chat.findElement(cssSelector("div.date")).getText();
                 String chatTitle = chat.findElement(cssSelector("div.title")).getText();
+                chatDate=date+" "+chatTime;
+                System.out.println("chatDate "+chatDate);
                 mongoUpdateData("Ynet", chatDate, chatTitle, i+1,"NULL",src1);
             }
         }
@@ -211,6 +216,8 @@ public Boolean dropTable(int i,String site)
   public  void test02_n12Chat() throws Exception {
 
      driver.get(n12Chat);
+     String date=getDate();
+     String chatDate="";
      Thread.sleep(750);
      driver.findElement(n12FullChatButton).click();
      Thread.sleep(750);
@@ -220,10 +227,12 @@ public Boolean dropTable(int i,String site)
     if (dropTable(5,src2)) {
          for (int i = 0; i < 5; i++) {
              WebElement chat = linksN12.get(i);
-             String chatDate = chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//mc-message-footer
+             String chatTime = chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//mc-message-footer
              String chatTitle = chat.findElement(cssSelector("div.mc-message-content.mc-message-content_open")).getText();//chat.findElement(cssSelector("div.mc-message-content.mc-message-content_open")).getText();//mc-extendable-text__content
              List<WebElement> linksImgN12 = linksN12.get(i).findElements((By.cssSelector("div.mc-content-media-item.mc-content-media-item_picture")));
              System.out.println(linksImgN12.size());
+             chatDate=date+" "+chatTime;
+
              if (linksImgN12.size()>0) {
                  String img = linksImgN12.get(0).getAttribute("style");
                  img=img.substring(23, img.length()-3);
@@ -239,12 +248,13 @@ public Boolean dropTable(int i,String site)
      else {
          for (int i = 0; i < 5; i++) {
              WebElement chat = linksN12.get(i);
-             String chatDate = chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//mc-message-footer
+             String chatTime = chat. findElement(cssSelector("p.mc-message-footer__time")).getText();//chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//mc-message-footer
              String chatTitle = chat.findElement(cssSelector("div.mc-message-content.mc-message-content_open")).getText();//chat.findElement(cssSelector("div.mc-message-content.mc-message-content_open")).getText();//mc-extendable-text__content
             // ifImgExist(linksN12.get(i));
-             System.out.println(i+" "+chatDate+" "+chatTitle);
-         //    mongoUpdateData("N12", chatDate, chatTitle, i + 1, "NULL");
+             System.out.println(i+" "+chatTime+" "+chatTitle);
              List<WebElement> linksImgN12 = linksN12.get(i).findElements((By.cssSelector("div.mc-content-media-item.mc-content-media-item_picture")));
+             chatDate=date+" "+chatTime;
+
              if (linksImgN12.size()>0) {
                  String img = linksImgN12.get(0).getAttribute("style");
                  img=img.substring(23, img.length()-3);
@@ -258,11 +268,12 @@ public Boolean dropTable(int i,String site)
          }
      }
  }
- /* @Test
+ /*@Test
  public void test03_geektime()
  {
-     driver.get("https://www.geektime.co.il/");
-     WebElement gtMainArticle = driver.findElement(By.cssSelector("div#news_posts"));
+     driver.get("https://www.yad2.co.il/realestate/forsale?topArea=41&area=21&city=0070&propertyGroup=apartments");
+     WebElement gtMainArticle = driver.findElement(By.cssSelector("button.page-num"));
+     System.out.println(gtMainArticle.getText()+" gtMainArticle lenth");
      List<WebElement> articles = gtMainArticle.findElements(By.tagName("h3"));
      System.out.println("articles "+articles.size());
 
