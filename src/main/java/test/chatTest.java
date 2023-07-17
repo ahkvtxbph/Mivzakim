@@ -96,6 +96,7 @@ By n12FullChatButton=By.cssSelector("div.mc-feed.mc-feed_shown.default-root-clos
 public  void createDb(String site)
 {
     String connectionString = "mongodb+srv://shilo:a72Y53vXKjhNDAJn@chatnews.uaripa9.mongodb.net/?retryWrites=true&w=majority";
+    
     ServerApi serverApi = ServerApi.builder()
             .version(ServerApiVersion.V1)
             .build();
