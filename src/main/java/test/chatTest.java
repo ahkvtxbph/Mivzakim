@@ -36,9 +36,11 @@ public class chatTest extends BaseTest{
    String password="a72Y53vXKjhNDAJn";
    String userName="shilo";
     String h1="";
-    String dbName1="Mivzakim";
-    String src1="Ynet";
-    String src2="N12";
+    String dbName1="GQ-Dashboard";
+    /*String src1="Ynet";
+    String src2="N12";*/
+    String src1="news";
+    String src2="news";
 
 
   private String ynetChat="https://www.ynet.co.il/news/category/184";
@@ -95,8 +97,8 @@ By n12FullChatButton=By.cssSelector("div.mc-feed.mc-feed_shown.default-root-clos
 
 public  void createDb(String site)
 {
-    String connectionString = "mongodb+srv://shilo:a72Y53vXKjhNDAJn@chatnews.uaripa9.mongodb.net/?retryWrites=true&w=majority";
-    
+    //  String connectionString = "mongodb+srv://shilo:a72Y53vXKjhNDAJn@chatnews.uaripa9.mongodb.net/?retryWrites=true&w=majority";
+      String connectionString = "mongodb+srv://yaal-2122:wsmJQ3ggbFxFtHX@cluster0.qnlfmxm.mongodb.net/GQ-Dashboard?retryWrites=true&w=majority";
     ServerApi serverApi = ServerApi.builder()
             .version(ServerApiVersion.V1)
             .build();
@@ -213,8 +215,8 @@ public Boolean dropTable(int i,String site)
 
     }
 
- @Test
-  public  void test02_n12Chat() throws Exception {
+/* @Test
+  public  void test02_n12Chat_Ver_2() throws Exception {
 
      driver.get(n12Chat);
      String date=getDate();
@@ -268,28 +270,63 @@ public Boolean dropTable(int i,String site)
              }
          }
      }
- }
- /*@Test
- public void test03_geektime()
- {
-     driver.get("https://www.yad2.co.il/realestate/forsale?topArea=41&area=21&city=0070&propertyGroup=apartments");
-     WebElement gtMainArticle = driver.findElement(By.cssSelector("button.page-num"));
-     System.out.println(gtMainArticle.getText()+" gtMainArticle lenth");
-     List<WebElement> articles = gtMainArticle.findElements(By.tagName("h3"));
-     System.out.println("articles "+articles.size());
-
-         for (int i=0;i<articles.size();i++)
-         {
-             System.out.println(articles.get(i).getText());
-             JavascriptExecutor jse2 = (JavascriptExecutor)driver;
-             jse2.executeScript("arguments[0].click()", articles.get(i));
-             articleDetails(articles.get(i));
-             driver.navigate().back();
-             gtMainArticle = driver.findElement(By.cssSelector("div#news_posts"));
-             articles = gtMainArticle.findElements(By.tagName("h3"));
-         }
-
  }*/
+ @Test
+ public void test03_n12Chat_Ver_2() throws InterruptedException {
+
+     driver.get(n12Chat);
+     String date=getDate();
+     String chatDate="";
+     Thread.sleep(750);
+     driver.findElement(n12FullChatButton).click();
+     Thread.sleep(750);
+     WebElement industriesN12 = driver.findElement(n12ChatCase);//n12ChatCase);n12ChatCase
+     List<WebElement> linksN12 = industriesN12.findElements(n12SubChat);//"div.mc-message-wrap")); "div.mc-reporter__messages"
+  System.out.println("linksN12 Size "+linksN12.size());
+    if (dropTable(10,src2)) {
+         for (int i = 5; i < 10; i++) {
+             WebElement chat = linksN12.get(i);
+             String chatTime = chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//mc-message-footer
+             String chatTitle = chat.findElement(cssSelector("div.mc-message-content.mc-message-content_open")).getText();//chat.findElement(cssSelector("div.mc-message-content.mc-message-content_open")).getText();//mc-extendable-text__content
+             List<WebElement> linksImgN12 = linksN12.get(i).findElements((By.cssSelector("div.mc-content-media-item.mc-content-media-item_picture")));
+             System.out.println(linksImgN12.size());
+             chatDate=date+" "+chatTime;
+
+             if (linksImgN12.size()>0) {
+                 String img = linksImgN12.get(0).getAttribute("style");
+                 img=img.substring(23, img.length()-3);
+                 System.out.println(i+" "+chatDate+" "+chatTitle+" "+img);
+                 mongoInsertData("N12", chatDate, chatTitle,i+1, img,src2);
+             }
+             else {
+                 System.out.println(i+" "+chatDate+" "+chatTitle+" "+"NULL");
+                 mongoInsertData("N12", chatDate, chatTitle, i+1,"NULL",src2);
+             }
+         }
+     }
+     else {
+         for (int i = 5; i < 10; i++) {
+             WebElement chat = linksN12.get(i);
+             String chatTime = chat. findElement(cssSelector("p.mc-message-footer__time")).getText();//chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//mc-message-footer
+             String chatTitle = chat.findElement(cssSelector("div.mc-message-content.mc-message-content_open")).getText();//chat.findElement(cssSelector("div.mc-message-content.mc-message-content_open")).getText();//mc-extendable-text__content
+            // ifImgExist(linksN12.get(i));
+             System.out.println(i+" "+chatTime+" "+chatTitle);
+             List<WebElement> linksImgN12 = linksN12.get(i).findElements((By.cssSelector("div.mc-content-media-item.mc-content-media-item_picture")));
+             chatDate=date+" "+chatTime;
+
+             if (linksImgN12.size()>0) {
+                 String img = linksImgN12.get(0).getAttribute("style");
+                 img=img.substring(23, img.length()-3);
+                 System.out.println(i+" "+chatDate+" "+chatTitle+" "+img);
+                 mongoUpdateData("N12", chatDate, chatTitle,i+1,img,src2);
+             }
+             else {
+                 System.out.println(i+" "+chatDate+" "+chatTitle+" "+"NULL");
+                 mongoUpdateData("N12", chatDate, chatTitle,i+1,"NULL",src2);
+             }
+         }
+     }
+ }
 
 
  public void ifImgExist(WebElement element)
