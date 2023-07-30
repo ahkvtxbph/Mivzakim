@@ -42,6 +42,7 @@ public class chatTest extends BaseTest {
     String src2="N12";*/
     String src1 = "mivzakims";
     String src2 = "mivzakims";
+    String replace="עוד…";
 
 
     private String ynetChat = "https://www.ynet.co.il/news/category/184";
@@ -124,8 +125,9 @@ public class chatTest extends BaseTest {
         return false;
     }
 
+
     public void mongoInsertData(String author, String date, String time, String title, int count,String video, String imageLink, String site) {
-        System.out.println("Shilo insert " + count + " " + author + " " + date + " " +time+ " "+ count + " " + title + "" + imageLink);
+        System.out.println("Shilo insert " + count + " " + author + " " + date + " " +time+ " "+ count + " " + title + " " + imageLink);
         MongoCollection<Document> collection = db.getCollection(site);
         InsertOneResult result = collection.insertOne(new Document()
                 .append("_id", new ObjectId())
@@ -199,6 +201,10 @@ public class chatTest extends BaseTest {
                 WebElement chat = links.get(i);
                 String chatTime = chat.findElement(cssSelector("div.date")).getText();
                 String chatTitle = chat.findElement(cssSelector("div.title")).getText();
+                if (chatTitle.contains(replace))
+                {
+                    chatTitle.replace(replace,"");
+                }
                 chatDate = date + " " + chatTime;
                 System.out.println("chatDate " + chatDate);
                 mongoInsertData("Ynet", date, chatTime, chatTitle, i + 1,"NULL", "NULL", src1);
@@ -208,6 +214,10 @@ public class chatTest extends BaseTest {
                 WebElement chat = links.get(i);
                 String chatTime = chat.findElement(cssSelector("div.date")).getText();
                 String chatTitle = chat.findElement(cssSelector("div.title")).getText();
+                if (chatTitle.contains(replace))
+                {
+                    chatTitle.replace(replace,"");
+                }
                 chatDate = date + " " + chatTime;
                 System.out.println("chatDate " + chatDate);
                 mongoUpdateData("Ynet", date, chatTime, chatTitle, i + 1,"NULL", "NULL", src1);
@@ -237,6 +247,11 @@ public class chatTest extends BaseTest {
             WebElement chat = linksN12.get(i);
             String chatTime = chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//mc-message-footer
             String chatTitle = chat.findElement(cssSelector("div.mc-message-content.mc-message-content_open")).getText();//chat.findElement(cssSelector("div.mc-message-content.mc-message-content_open")).getText();//mc-extendable-text__content
+            if (chatTitle.contains(replace))
+            {
+                chatTitle.replace(replace,"");
+            }
+            System.out.println(chatTitle+" chatTitle");
             List<WebElement> linksImgN12Vid = linksN12.get(i).findElements((By.cssSelector("div.mc-play-btn")));
             System.out.println(linksImgN12Vid.size() + " vid");
             if (linksImgN12Vid.size() > 0) {
@@ -278,6 +293,10 @@ public class chatTest extends BaseTest {
                 WebElement chat = linksN12.get(i);
                 String chatTime = chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//mc-message-footer
                 String chatTitle = chat.findElement(cssSelector("div.mc-message-content.mc-message-content_open")).getText();//chat.findElement(cssSelector("div.mc-message-content.mc-message-content_open")).getText();//mc-extendable-text__content
+                if (chatTitle.contains(replace))
+                {
+                    chatTitle.replace(replace,"");
+                }
                 List<WebElement> linksImgN12Vid = linksN12.get(i).findElements((By.cssSelector("div.mc-play-btn")));
                 System.out.println(linksImgN12Vid.size() + " vid");
                 if (linksImgN12Vid.size() > 0) {
