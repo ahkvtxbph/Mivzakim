@@ -216,62 +216,7 @@ public class chatTest extends BaseTest {
 
     }
 
-    /* @Test
-      public  void test02_n12Chat_Ver_2() throws Exception {
 
-         driver.get(n12Chat);
-         String date=getDate();
-         String chatDate="";
-         Thread.sleep(750);
-         driver.findElement(n12FullChatButton).click();
-         Thread.sleep(750);
-         WebElement industriesN12 = driver.findElement(n12ChatCase);//n12ChatCase);n12ChatCase
-         List<WebElement> linksN12 = industriesN12.findElements(n12SubChat);//"div.mc-message-wrap")); "div.mc-reporter__messages"
-      System.out.println("linksN12 Size "+linksN12.size());
-        if (dropTable(5,src2)) {
-             for (int i = 0; i < 5; i++) {
-                 WebElement chat = linksN12.get(i);
-                 String chatTime = chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//mc-message-footer
-                 String chatTitle = chat.findElement(cssSelector("div.mc-message-content.mc-message-content_open")).getText();//chat.findElement(cssSelector("div.mc-message-content.mc-message-content_open")).getText();//mc-extendable-text__content
-                 List<WebElement> linksImgN12 = linksN12.get(i).findElements((By.cssSelector("div.mc-content-media-item.mc-content-media-item_picture")));
-                 System.out.println(linksImgN12.size());
-                 chatDate=date+" "+chatTime;
-
-                 if (linksImgN12.size()>0) {
-                     String img = linksImgN12.get(0).getAttribute("style");
-                     img=img.substring(23, img.length()-3);
-                     System.out.println(i+" "+chatDate+" "+chatTitle+" "+img);
-                     mongoInsertData("N12", chatDate, chatTitle,i+1, img,src2);
-                 }
-                 else {
-                     System.out.println(i+" "+chatDate+" "+chatTitle+" "+"NULL");
-                     mongoInsertData("N12", chatDate, chatTitle, i+1,"NULL",src2);
-                 }
-             }
-         }
-         else {
-             for (int i = 0; i < 5; i++) {
-                 WebElement chat = linksN12.get(i);
-                 String chatTime = chat. findElement(cssSelector("p.mc-message-footer__time")).getText();//chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//mc-message-footer
-                 String chatTitle = chat.findElement(cssSelector("div.mc-message-content.mc-message-content_open")).getText();//chat.findElement(cssSelector("div.mc-message-content.mc-message-content_open")).getText();//mc-extendable-text__content
-                // ifImgExist(linksN12.get(i));
-                 System.out.println(i+" "+chatTime+" "+chatTitle);
-                 List<WebElement> linksImgN12 = linksN12.get(i).findElements((By.cssSelector("div.mc-content-media-item.mc-content-media-item_picture")));
-                 chatDate=date+" "+chatTime;
-
-                 if (linksImgN12.size()>0) {
-                     String img = linksImgN12.get(0).getAttribute("style");
-                     img=img.substring(23, img.length()-3);
-                     System.out.println(i+" "+chatDate+" "+chatTitle+" "+img);
-                     mongoUpdateData("N12", chatDate, chatTitle,i+1,img,src2);
-                 }
-                 else {
-                     System.out.println(i+" "+chatDate+" "+chatTitle+" "+"NULL");
-                     mongoUpdateData("N12", chatDate, chatTitle,i+1,"NULL",src2);
-                 }
-             }
-         }
-     }*/
     @Test
     public void test03_n12Chat_Ver_2() throws InterruptedException {
 
@@ -316,7 +261,7 @@ public class chatTest extends BaseTest {
                     String img = linksImgN12.get(0).getAttribute("style");
                     img=img.substring(23, img.length()-3);
                     System.out.println(i+" "+date+" "+chatTime+" "+chatTitle+" "+img);
-                    mongoInsertData("N12",date, chatTime, chatTitle,i+6,"Null", img,src2);
+                    mongoInsertData("N12",date, chatTime, chatTitle,i+6,"NULL", img,src2);
                 }
                 else
                 {
@@ -358,7 +303,7 @@ public class chatTest extends BaseTest {
                         String img = linksImgN12.get(0).getAttribute("style");
                         img=img.substring(23, img.length()-3);
                         System.out.println(i+" "+date+" "+chatTime+" "+chatTitle+" "+img);
-                        mongoUpdateData("N12",date, chatTime, chatTitle,i+6,"Null", img,src2);
+                        mongoUpdateData("N12",date, chatTime, chatTitle,i+6,"NULL", img,src2);
                     }
                     else
                     {
@@ -369,21 +314,7 @@ public class chatTest extends BaseTest {
         }
 
 
-/* public void ifImgExist(WebElement element)
- {  String img="";
-     try {
-        if (element.findElement((By.cssSelector("div.mc-content-media-item.mc-content-media-item_picture"))).isDisplayed())
-        {
-            img=element.getAttribute("style");
-        }
-          //  .getAttribute("style");
-     }
-     catch (Exception  e)
-     {
-          img="NULL";
-     }
-     System.out.println("Img "+img);
- }*/
+
 
     }
 }
