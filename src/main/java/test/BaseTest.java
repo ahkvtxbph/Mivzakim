@@ -36,7 +36,7 @@ public class BaseTest extends Throwable {
             options.addArguments("--headless");
             options.addExtensions (new File("src/data/addon/extension_1_50_0_0.crx"));
             driver = new ChromeDriver(options);
-           // driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         } else {
             System.setProperty("webdriver.gecko.driver", "src/data/geckodriver.exe");
             driver = new FirefoxDriver();
