@@ -159,7 +159,7 @@ public class chatTest extends BaseTest {
         db.getCollection(site).updateOne(searchQuery, updateQuery);
     }
 
-    public String getDate() {
+    public String getDate() { 
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Date date = new Date();
         return String.copyValueOf(formatter.format(date).toCharArray());
