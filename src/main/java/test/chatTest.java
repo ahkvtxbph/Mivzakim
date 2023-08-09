@@ -159,7 +159,7 @@ public class chatTest extends BaseTest {
         db.getCollection(site).updateOne(searchQuery, updateQuery);
     }
 
-    public String getDate() { 
+    public String getDate() {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         Date date = new Date();
         return String.copyValueOf(formatter.format(date).toCharArray());
@@ -252,7 +252,7 @@ public class chatTest extends BaseTest {
                 chatTitle.replace(replace,"");
             }
             System.out.println(chatTitle+" chatTitle");
-            List<WebElement> linksImgN12Vid = linksN12.get(i).findElements((By.cssSelector("div.mc-play-btn")));
+            List<WebElement> linksImgN12Vid = /*linksN12.get(i)*/chat.findElements((By.cssSelector("div.mc-play-btn")));
             System.out.println(linksImgN12Vid.size() + " vid");
             if (linksImgN12Vid.size() > 0) {
               //  System.out.println("VIdeo Shilo 5");
