@@ -25,6 +25,7 @@ import org.bson.types.ObjectId;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import static org.apache.commons.lang3.StringUtils.substring;
 import static org.openqa.selenium.By.cssSelector;
 import static org.openqa.selenium.By.tagName;
 
@@ -102,8 +103,8 @@ public class chatTest extends BaseTest {
     }
 
     public void createDb(String site) {
-          String connectionString = "mongodb+srv://shilo:a72Y53vXKjhNDAJn@chatnews.uaripa9.mongodb.net/?retryWrites=true&w=majority";
-       //  String connectionString = "mongodb+srv://yaal-2122:wsmJQ3ggbFxFtHX@cluster0.qnlfmxm.mongodb.net/GQ-Dashboard?retryWrites=true&w=majority";
+     //   String connectionString = "mongodb+srv://shilo:a72Y53vXKjhNDAJn@chatnews.uaripa9.mongodb.net/?retryWrites=true&w=majority";
+         String connectionString = "mongodb+srv://yaal-2122:wsmJQ3ggbFxFtHX@cluster0.qnlfmxm.mongodb.net/GQ-Dashboard?retryWrites=true&w=majority";
         ServerApi serverApi = ServerApi.builder()
                 .version(ServerApiVersion.V1)
                 .build();
@@ -370,6 +371,7 @@ public class chatTest extends BaseTest {
             for (int i = 0; i < 10; i++) {
                 WebElement chat = hamaList.get(i);
                 String chatTime = chat.findElement(cssSelector("span.styles_span__I9y9v.styles_date__Jyh31")).getText();
+                chatTime=chatTime.substring(0, 5);
                 String chatTitle = chat.findElement(cssSelector("h2.styles_title__WrHVK")).getText();
                 String chatMain = chat.findElement(cssSelector("h2.styles_title__WrHVK")).getText();
                 if (chatTitle.contains(replace)) {
