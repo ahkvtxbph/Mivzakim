@@ -42,12 +42,13 @@ public class chatTest extends BaseTest {
     String src2="N12";*/
     String src1 = "mivzakims";
     String src2 = "mivzakims";
+    String src3 = "mivzakims";
     String replace="עוד…";
 
 
     private String ynetChat = "https://www.ynet.co.il/news/category/184";
     private String n12Chat = "https://www.n12.co.il/";
-    private String geekTime = "https://www.one.co.il/Soccer/League/1";
+    private String hamal = "https://hamal.co.il/";
 
     By ynetMainChat = By.cssSelector("div.Accordion");
     By ynetAd = By.cssSelector("div#closemaavron");
@@ -58,10 +59,12 @@ public class chatTest extends BaseTest {
     By n12OpenCase = By.cssSelector("div.mc-feed.mc-feed_shown.default-root-close-chat button.mc-enter-btn");
     By n12ChatCase = By.cssSelector("div#side-chat");//"div.mc-feed.mc-feed_shown.default-root-close-chat");
     By n12SubChat = By.cssSelector("div.mc-reporter__messages");
+    By hamalMain=By.cssSelector("div#__next");
+    By hamalSecond=By.tagName("article");
     By n12ChatOpen = By.cssSelector("div.mc-app.mc-topic.active");
     By XButton=By.cssSelector("button.mc-glr-btn-close");
 
-    //  By n12FullChatButton=By.cssSelector("div.mc-feed.mc-feed_shown.default-root-close-chat button.mc-enter-btn");
+  //   By n12FullChatButton=By.cssSelector("div.mc-feed.mc-feed_shown.default-root-close-chat button.mc-enter-btn");
     By n12FullChatButton = By.cssSelector("div.mc-feed.mc-feed_shown.default-root-close-chat button.mc-enter-btn");
 
 
@@ -99,8 +102,8 @@ public class chatTest extends BaseTest {
     }
 
     public void createDb(String site) {
-        //  String connectionString = "mongodb+srv://shilo:a72Y53vXKjhNDAJn@chatnews.uaripa9.mongodb.net/?retryWrites=true&w=majority";
-         String connectionString = "mongodb+srv://yaal-2122:wsmJQ3ggbFxFtHX@cluster0.qnlfmxm.mongodb.net/GQ-Dashboard?retryWrites=true&w=majority";
+          String connectionString = "mongodb+srv://shilo:a72Y53vXKjhNDAJn@chatnews.uaripa9.mongodb.net/?retryWrites=true&w=majority";
+       //  String connectionString = "mongodb+srv://yaal-2122:wsmJQ3ggbFxFtHX@cluster0.qnlfmxm.mongodb.net/GQ-Dashboard?retryWrites=true&w=majority";
         ServerApi serverApi = ServerApi.builder()
                 .version(ServerApiVersion.V1)
                 .build();
@@ -331,9 +334,58 @@ public class chatTest extends BaseTest {
                 }
             }
         }
+   }
 
-
-
-
+    @Test
+    public void test04_Hamal() throws InterruptedException {
+        driver.get(hamal);
+        String date = getDate();
+        String chatDate = "";
+        Thread.sleep(750);
+        WebElement hamal = driver.findElement(hamalMain);
+        List<WebElement> hamaList = hamal.findElements(hamalSecond);
+        System.out.println("hamaList Size " + hamaList.size());
+        if (dropTable(20, src3)) {
+            for (int i = 0; i < 10; i++) {
+                WebElement chat = hamaList.get(i);
+                String chatTime = chat.findElement(cssSelector("span.styles_span__I9y9v.styles_date__Jyh31")).getText();
+                String chatTitle = chat.findElement(cssSelector("h2.styles_title__WrHVK")).getText();
+                String chatMain = chat.findElement(cssSelector("h2.styles_title__WrHVK")).getText();
+                if (chatTitle.contains(replace)) {
+                    chatTitle.replace(replace, "");
+                }
+                List<WebElement> linksImgHamal = hamaList.get(i).findElements((By.cssSelector("img[alt='image-widget']")));
+                if (linksImgHamal.size() > 0) {
+                    String img = linksImgHamal.get(0).getAttribute("src");
+                    mongoInsertData("Hamal",date, chatTime, chatTitle,i+11,"NULL", img,src2);
+                }
+                else
+                {
+                    mongoInsertData("Hamal",date, chatTime, chatTitle,i+11,"NULL", "NULL",src2);
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < 10; i++) {
+                WebElement chat = hamaList.get(i);
+                String chatTime = chat.findElement(cssSelector("span.styles_span__I9y9v.styles_date__Jyh31")).getText();
+                String chatTitle = chat.findElement(cssSelector("h2.styles_title__WrHVK")).getText();
+                String chatMain = chat.findElement(cssSelector("h2.styles_title__WrHVK")).getText();
+                if (chatTitle.contains(replace)) {
+                    chatTitle.replace(replace, "");
+                }
+                List<WebElement> linksImgHamal = hamaList.get(i).findElements((By.cssSelector("img[alt='image-widget']")));
+                if (linksImgHamal.size() > 0) {
+                    String img = linksImgHamal.get(0).getAttribute("src");
+                    System.out.println(img);
+                    mongoUpdateData("Hamal",date, chatTime, chatTitle,i+11,"NULL", img,src2);
+                }
+                else
+                {
+                    mongoUpdateData("Hamal",date, chatTime, chatTitle,i+11,"NULL", "NULL",src2);
+                }
+            }
+        }
     }
 }
