@@ -142,8 +142,8 @@ public class chatTest extends BaseTest {
     }
 
     public void createDb(String site) {
-     //  String connectionString = "mongodb+srv://shilo:a72Y53vXKjhNDAJn@chatnews.uaripa9.mongodb.net/?retryWrites=true&w=majority";
-         String connectionString = "mongodb+srv://yaal-2122:wsmJQ3ggbFxFtHX@cluster0.qnlfmxm.mongodb.net/GQ-Dashboard?retryWrites=true&w=majority";
+       //String connectionString = "mongodb+srv://shilo:a72Y53vXKjhNDAJn@chatnews.uaripa9.mongodb.net/?retryWrites=true&w=majority";
+        String connectionString = "mongodb+srv://yaal-2122:wsmJQ3ggbFxFtHX@cluster0.qnlfmxm.mongodb.net/GQ-Dashboard?retryWrites=true&w=majority";
         ServerApi serverApi = ServerApi.builder()
                 .version(ServerApiVersion.V1)
                 .build();
@@ -267,7 +267,7 @@ public class chatTest extends BaseTest {
 
 
     @Test
-    public void test03_n12Chat_Ver_2() throws InterruptedException {
+    public void test02_n12Chat_Ver_2() throws InterruptedException {
 
         String currHandle = driver.getWindowHandle();
         driver.get(n12Chat);
@@ -285,7 +285,7 @@ public class chatTest extends BaseTest {
         for (int i = 0; i < 5; i++) {
             WebElement chat = linksN12.get(i);
             String chatTime = chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//mc-message-footer
-            String chatTitle = chat.findElement(cssSelector("div.mc-message-content.mc-message-content_open")).getText();//chat.findElement(cssSelector("div.mc-message-content.mc-message-content_open")).getText();//mc-extendable-text__content
+            String chatTitle = chat.findElement(cssSelector("div#side-chat div.mc-extendable-text__content")).getText();//chat.findElement(cssSelector("div.mc-extendable-text__content")).getText();//mc-extendable-text__content
             chatTitle=replaceMore(chatTitle);
             System.out.println(chatTitle+" chatTitle");
             List<WebElement> linksImgN12Vid = /*linksN12.get(i)*/chat.findElements((By.cssSelector("div.mc-play-btn")));
@@ -321,14 +321,14 @@ public class chatTest extends BaseTest {
             }
         }
 
-
  }
         else
         {
             for (int i = 0; i < 5; i++) {
                 WebElement chat = linksN12.get(i);
                 String chatTime = chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//mc-message-footer
-                String chatTitle = chat.findElement(cssSelector("div.mc-message-content.mc-message-content_open")).getText();//chat.findElement(cssSelector("div.mc-message-content.mc-message-content_open")).getText();//mc-extendable-text__content
+                String chatTitle = chat.findElement(cssSelector("div#side-chat div.mc-extendable-text__content")).getText();//chat.findElement(cssSelector("div.mc-extendable-text__content")).getText();//mc-extendable-text__content
+                System.out.println("chatTitle - "+i+" "+chatTitle);
                 chatTitle=replaceMore(chatTitle);
                 List<WebElement> linksImgN12Vid = linksN12.get(i).findElements((By.cssSelector("div.mc-play-btn")));
                 System.out.println(linksImgN12Vid.size() + " vid");
@@ -367,7 +367,7 @@ public class chatTest extends BaseTest {
    }
 
     @Test
-    public void test04_Hamal() throws InterruptedException {
+    public void test03_Hamal() throws InterruptedException {
         driver.get(hamal);
         String date = getDate();
         String chatDate = "";
