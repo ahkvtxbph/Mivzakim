@@ -77,21 +77,41 @@ public class chatTest extends BaseTest {
         BaseTest = new BaseTest(driver);
     }
 
-    public String replaceMore(String chatTitle)
-    {
-        if (chatTitle.contains(replace))
-        {
-            chatTitle.replace(replace,"");
-        }
-        if(chatTitle.contains(replace2))
-        {
-            chatTitle.replace(replace2,"");
-        }
-        if(chatTitle.contains(replace3))
-        {
-            chatTitle.replace(replace3,"");
-        }
-     return chatTitle;
+    public String replaceMore(String chatTitle) {
+        String temp = "";
+        int status = 0;
+        System.out.println("Temp " + chatTitle + " " + chatTitle.length());
+        temp = chatTitle.substring(chatTitle.length() - 8);
+        System.out.println("Temp " + temp + " " + temp.length());
+        if (temp.contains(replace)) {
+            status = 1;
+            System.out.println("status - " + status);
+            chatTitle = chatTitle.substring(0, chatTitle.length() - 8);
+            System.out.println(chatTitle);
+        } else if (status == 0) {
+            temp = chatTitle.substring(chatTitle.length() - 4);
+            System.out.println("Temp " + temp + " " + temp.length());
+            if (temp.contains(replace2)) {
+                if (temp.contains(replace2)) {
+                    status = 2;
+                    System.out.println("status - " + status);
+                    chatTitle = chatTitle.substring(0, chatTitle.length() - 4);
+                    System.out.println(chatTitle);
+                }
+            }
+
+            } else if (status == 0) {
+                temp = chatTitle.substring(chatTitle.length() - 1);
+                System.out.println("Temp " + temp + " " + temp.length());
+                if (chatTitle.contains(replace3)) {
+                    status = 3;
+                    System.out.println("status - " + status);
+                    chatTitle = chatTitle.substring(0, chatTitle.length() - 1);
+                    System.out.println(chatTitle);
+                }
+            }
+            status = 0;
+            return chatTitle;
     }
     public String getUrl() {
         return ynetChat;
@@ -122,7 +142,7 @@ public class chatTest extends BaseTest {
     }
 
     public void createDb(String site) {
-     //   String connectionString = "mongodb+srv://shilo:a72Y53vXKjhNDAJn@chatnews.uaripa9.mongodb.net/?retryWrites=true&w=majority";
+     //  String connectionString = "mongodb+srv://shilo:a72Y53vXKjhNDAJn@chatnews.uaripa9.mongodb.net/?retryWrites=true&w=majority";
          String connectionString = "mongodb+srv://yaal-2122:wsmJQ3ggbFxFtHX@cluster0.qnlfmxm.mongodb.net/GQ-Dashboard?retryWrites=true&w=majority";
         ServerApi serverApi = ServerApi.builder()
                 .version(ServerApiVersion.V1)
