@@ -44,9 +44,10 @@ public class chatTest extends BaseTest {
     String src1 = "mivzakims";
     String src2 = "mivzakims";
     String src3 = "mivzakims";
+    String replace="קרא עוד…";
     String replace2="עוד…";
     String replace3="…";
-    String replace="קרא עוד…";
+
 
 
     private String ynetChat = "https://www.ynet.co.il/news/category/184";
@@ -76,6 +77,22 @@ public class chatTest extends BaseTest {
         BaseTest = new BaseTest(driver);
     }
 
+    public String replaceMore(String chatTitle)
+    {
+        if (chatTitle.contains(replace))
+        {
+            chatTitle.replace(replace,"");
+        }
+        if(chatTitle.contains(replace2))
+        {
+            chatTitle.replace(replace2,"");
+        }
+        if(chatTitle.contains(replace3))
+        {
+            chatTitle.replace(replace3,"");
+        }
+     return chatTitle;
+    }
     public String getUrl() {
         return ynetChat;
     }
@@ -207,18 +224,9 @@ public class chatTest extends BaseTest {
                 WebElement chat = links.get(i);
                 String chatTime = chat.findElement(cssSelector("div.date")).getText();
                 String chatTitle = chat.findElement(cssSelector("div.title")).getText();
-                if (chatTitle.contains(replace))
-                {
-                    chatTitle.replace(replace,"");
-                }
-                else if(chatTitle.contains(replace2))
-                {
-                    chatTitle.replace(replace2,"");
-                }
-                else if(chatTitle.contains(replace3))
-                {
-                    chatTitle.replace(replace2,"");
-                }
+
+                chatTitle=replaceMore(chatTitle);
+
                 chatDate = date + " " + chatTime;
                 System.out.println("chatDate " + chatDate);
                 mongoInsertData("Ynet", date, chatTime, chatTitle, i + 1,"NULL", "NULL", src1);
@@ -228,18 +236,7 @@ public class chatTest extends BaseTest {
                 WebElement chat = links.get(i);
                 String chatTime = chat.findElement(cssSelector("div.date")).getText();
                 String chatTitle = chat.findElement(cssSelector("div.title")).getText();
-                if (chatTitle.contains(replace))
-                {
-                    chatTitle.replace(replace,"");
-                }
-                else if(chatTitle.contains(replace2))
-                {
-                    chatTitle.replace(replace2,"");
-                }
-                else if(chatTitle.contains(replace3))
-                {
-                    chatTitle.replace(replace2,"");
-                }
+                chatTitle=replaceMore(chatTitle);
                 chatDate = date + " " + chatTime;
                 System.out.println("chatDate " + chatDate);
                 mongoUpdateData("Ynet", date, chatTime, chatTitle, i + 1,"NULL", "NULL", src1);
@@ -269,18 +266,7 @@ public class chatTest extends BaseTest {
             WebElement chat = linksN12.get(i);
             String chatTime = chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//mc-message-footer
             String chatTitle = chat.findElement(cssSelector("div.mc-message-content.mc-message-content_open")).getText();//chat.findElement(cssSelector("div.mc-message-content.mc-message-content_open")).getText();//mc-extendable-text__content
-            if (chatTitle.contains(replace))
-            {
-                chatTitle.replace(replace,"");
-            }
-            else if(chatTitle.contains(replace2))
-            {
-                chatTitle.replace(replace2,"");
-            }
-            else if(chatTitle.contains(replace3))
-            {
-                chatTitle.replace(replace2,"");
-            }
+            chatTitle=replaceMore(chatTitle);
             System.out.println(chatTitle+" chatTitle");
             List<WebElement> linksImgN12Vid = /*linksN12.get(i)*/chat.findElements((By.cssSelector("div.mc-play-btn")));
             System.out.println(linksImgN12Vid.size() + " vid");
@@ -323,18 +309,7 @@ public class chatTest extends BaseTest {
                 WebElement chat = linksN12.get(i);
                 String chatTime = chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//mc-message-footer
                 String chatTitle = chat.findElement(cssSelector("div.mc-message-content.mc-message-content_open")).getText();//chat.findElement(cssSelector("div.mc-message-content.mc-message-content_open")).getText();//mc-extendable-text__content
-                if (chatTitle.contains(replace))
-                {
-                    chatTitle.replace(replace,"");
-                }
-                else if(chatTitle.contains(replace2))
-                {
-                    chatTitle.replace(replace2,"");
-                }
-                else if(chatTitle.contains(replace3))
-                {
-                    chatTitle.replace(replace2,"");
-                }
+                chatTitle=replaceMore(chatTitle);
                 List<WebElement> linksImgN12Vid = linksN12.get(i).findElements((By.cssSelector("div.mc-play-btn")));
                 System.out.println(linksImgN12Vid.size() + " vid");
                 if (linksImgN12Vid.size() > 0) {
@@ -386,18 +361,7 @@ public class chatTest extends BaseTest {
                 String chatTime = chat.findElement(cssSelector("span.styles_span__I9y9v.styles_date__Jyh31")).getText();
                 String chatTitle = chat.findElement(cssSelector("h2.styles_title__WrHVK")).getText();
                 String chatMain = chat.findElement(cssSelector("h2.styles_title__WrHVK")).getText();
-                if (chatTitle.contains(replace))
-                {
-                    chatTitle.replace(replace,"");
-                }
-                else if(chatTitle.contains(replace2))
-                {
-                    chatTitle.replace(replace2,"");
-                }
-                else if(chatTitle.contains(replace3))
-                {
-                    chatTitle.replace(replace2,"");
-                }
+                chatTitle=replaceMore(chatTitle);
                 List<WebElement> linksImgHamal = hamaList.get(i).findElements((By.cssSelector("img[alt='image-widget']")));
                 if (linksImgHamal.size() > 0) {
                     String img = linksImgHamal.get(0).getAttribute("src");
@@ -417,18 +381,7 @@ public class chatTest extends BaseTest {
                 chatTime=chatTime.substring(0, 5);
                 String chatTitle = chat.findElement(cssSelector("h2.styles_title__WrHVK")).getText();
                 String chatMain = chat.findElement(cssSelector("h2.styles_title__WrHVK")).getText();
-                if (chatTitle.contains(replace))
-                {
-                    chatTitle.replace(replace,"");
-                }
-                else if(chatTitle.contains(replace2))
-                {
-                    chatTitle.replace(replace2,"");
-                }
-                else if(chatTitle.contains(replace3))
-                {
-                    chatTitle.replace(replace2,"");
-                }
+                chatTitle=replaceMore(chatTitle);
                 List<WebElement> linksImgHamal = hamaList.get(i).findElements((By.cssSelector("img[alt='image-widget']")));
                 if (linksImgHamal.size() > 0) {
                     String img = linksImgHamal.get(0).getAttribute("src");
