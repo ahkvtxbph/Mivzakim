@@ -142,8 +142,9 @@ public class chatTest extends BaseTest {
     }
 
     public void createDb(String site) {
-       //String connectionString = "mongodb+srv://shilo:a72Y53vXKjhNDAJn@chatnews.uaripa9.mongodb.net/?retryWrites=true&w=majority";
+     // String connectionString = "mongodb+srv://shilo:a72Y53vXKjhNDAJn@chatnews.uaripa9.mongodb.net/?retryWrites=true&w=majority";
         String connectionString = "mongodb+srv://yaal-2122:wsmJQ3ggbFxFtHX@cluster0.qnlfmxm.mongodb.net/GQ-Dashboard?retryWrites=true&w=majority";
+        //  String connectionString = "mongodb+srv://yaal-2122:wsmJQ3ggbFxFtHX@cluster0.qnlfmxm.mongodb.net/GQ-Dashboard?retryWrites=true&w=majority";
         ServerApi serverApi = ServerApi.builder()
                 .version(ServerApiVersion.V1)
                 .build();
@@ -208,28 +209,6 @@ public class chatTest extends BaseTest {
         return String.copyValueOf(formatter.format(date).toCharArray());
     }
 
-    public void articleDetails(WebElement article) {
-        String articleBody = "";
-        String mainTitle = driver.findElement(By.cssSelector("h1.head-title")).getText();
-        String subTitle = driver.findElement(By.cssSelector("p.head-sub-title")).getText();
-        String category = driver.findElement(By.cssSelector("div.card_meta_cats")).getText();
-        String reporter = driver.findElement(By.cssSelector("div.author.sp")).getText();
-        String articleDate = driver.findElement(By.cssSelector("div.date.sp")).getText();
-        WebElement art = driver.findElement(cssSelector("div#content"));
-        List<WebElement> fullArticle = art.findElements(tagName("p"));
-
-        for (int i = 0; i < fullArticle.size(); i++) {
-            articleBody += fullArticle.get(i).getText() + '\n';
-        }
-        System.out.println(mainTitle);
-        System.out.println(subTitle);
-        System.out.println(category);
-        System.out.println(reporter);
-        System.out.println(articleDate);
-        System.out.println(articleBody);
-    }
-
-
     @Test
     public void test01_ynetChat() throws Exception {
 
@@ -241,7 +220,7 @@ public class chatTest extends BaseTest {
         System.out.println(links.size());
         if (dropTable(5, src1)) {
             for (int i = 0; i < 5; i++) {
-                WebElement chat = links.get(i);
+                WebElement chat = links.get(4-i);
                 String chatTime = chat.findElement(cssSelector("div.date")).getText();
                 String chatTitle = chat.findElement(cssSelector("div.title")).getText();
 
@@ -253,7 +232,7 @@ public class chatTest extends BaseTest {
             }
         } else {
             for (int i = 0; i < 5; i++) {
-                WebElement chat = links.get(i);
+                WebElement chat = links.get(4-i);
                 String chatTime = chat.findElement(cssSelector("div.date")).getText();
                 String chatTitle = chat.findElement(cssSelector("div.title")).getText();
                 chatTitle=replaceMore(chatTitle);
@@ -273,6 +252,7 @@ public class chatTest extends BaseTest {
         driver.get(n12Chat);
         String date = getDate();
         String vidSrc = "";
+        String img="NULL";
         Thread.sleep(750);
         driver.findElement(n12FullChatButton).click();
         Thread.sleep(750);
@@ -283,12 +263,14 @@ public class chatTest extends BaseTest {
 
         if (dropTable(10,src2)) {
         for (int i = 0; i < 5; i++) {
-            WebElement chat = linksN12.get(i);
+            Thread.sleep(1000);
+            img="NULL";
+            WebElement chat = linksN12.get(4-i);
             String chatTime = chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//mc-message-footer
             String chatTitle = chat.findElement(cssSelector("div#side-chat div.mc-extendable-text__content")).getText();//chat.findElement(cssSelector("div.mc-extendable-text__content")).getText();//mc-extendable-text__content
             chatTitle=replaceMore(chatTitle);
             System.out.println(chatTitle+" chatTitle");
-            List<WebElement> linksImgN12Vid = /*linksN12.get(i)*/chat.findElements((By.cssSelector("div.mc-play-btn")));
+            List<WebElement> linksImgN12Vid =chat.findElements((By.cssSelector("div.mc-play-btn")));
             System.out.println(linksImgN12Vid.size() + " vid");
             if (linksImgN12Vid.size() > 0) {
               //  System.out.println("VIdeo Shilo 5");
@@ -307,9 +289,9 @@ public class chatTest extends BaseTest {
             }
             else
             {
-                List<WebElement> linksImgN12 = linksN12.get(i).findElements((By.cssSelector("div.mc-content-media-item.mc-content-media-item_picture")));
+                List<WebElement> linksImgN12 = linksN12.get(4-i).findElements((By.cssSelector("div.mc-content-media-item.mc-content-media-item_picture")));
                 if (linksImgN12.size()>0) {
-                    String img = linksImgN12.get(0).getAttribute("style");
+                    img = linksImgN12.get(0).getAttribute("style");
                     img=img.substring(23, img.length()-3);
                     System.out.println(i+" "+date+" "+chatTime+" "+chatTitle+" "+img);
                     mongoInsertData("N12",date, chatTime, chatTitle,i+6,"NULL", img,src2);
@@ -325,12 +307,14 @@ public class chatTest extends BaseTest {
         else
         {
             for (int i = 0; i < 5; i++) {
-                WebElement chat = linksN12.get(i);
+                img="NULL";
+                Thread.sleep(1000);
+                WebElement chat = linksN12.get(4-i);
                 String chatTime = chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//mc-message-footer
                 String chatTitle = chat.findElement(cssSelector("div#side-chat div.mc-extendable-text__content")).getText();//chat.findElement(cssSelector("div.mc-extendable-text__content")).getText();//mc-extendable-text__content
                 System.out.println("chatTitle - "+i+" "+chatTitle);
                 chatTitle=replaceMore(chatTitle);
-                List<WebElement> linksImgN12Vid = linksN12.get(i).findElements((By.cssSelector("div.mc-play-btn")));
+                List<WebElement> linksImgN12Vid = linksN12.get(4-i).findElements((By.cssSelector("div.mc-play-btn")));
                 System.out.println(linksImgN12Vid.size() + " vid");
                 if (linksImgN12Vid.size() > 0) {
                     //  System.out.println("VIdeo Shilo 5");
@@ -350,9 +334,9 @@ public class chatTest extends BaseTest {
                 }
                 else
                 {
-                    List<WebElement> linksImgN12 = linksN12.get(i).findElements((By.cssSelector("div.mc-content-media-item.mc-content-media-item_picture")));
+                    List<WebElement> linksImgN12 = linksN12.get(4-i).findElements((By.cssSelector("div.mc-content-media-item.mc-content-media-item_picture")));
                     if (linksImgN12.size()>0) {
-                        String img = linksImgN12.get(0).getAttribute("style");
+                        img = linksImgN12.get(0).getAttribute("style");
                         img=img.substring(23, img.length()-3);
                         System.out.println(i+" "+date+" "+chatTime+" "+chatTitle+" "+img);
                         mongoUpdateData("N12",date, chatTime, chatTitle,i+6,"NULL", img,src2);
@@ -371,21 +355,24 @@ public class chatTest extends BaseTest {
         driver.get(hamal);
         String date = getDate();
         String chatDate = "";
+        String img="NULL";
         Thread.sleep(750);
         WebElement hamal = driver.findElement(hamalMain);
         List<WebElement> hamaList = hamal.findElements(hamalSecond);
         System.out.println("hamaList Size " + hamaList.size());
         if (dropTable(20, src3)) {
             for (int i = 0; i < 10; i++) {
-                WebElement chat = hamaList.get(i);
+                img="NULL";
+                WebElement chat = hamaList.get(9-i);
                 String chatTime = chat.findElement(cssSelector("span.styles_span__I9y9v.styles_date__Jyh31")).getText();
                 String chatTitle = chat.findElement(cssSelector("h2.styles_title__WrHVK")).getText();
                 String chatMain = chat.findElement(cssSelector("h2.styles_title__WrHVK")).getText();
                 chatTitle=replaceMore(chatTitle);
-                List<WebElement> linksImgHamal = hamaList.get(i).findElements((By.cssSelector("img[alt='image-widget']")));
+                List<WebElement> linksImgHamal = hamaList.get(9-i).findElements((By.cssSelector("img[alt='image-widget']")));
                 if (linksImgHamal.size() > 0) {
-                    String img = linksImgHamal.get(0).getAttribute("src");
+                    img = linksImgHamal.get(0).getAttribute("src");
                     mongoInsertData("Hamal",date, chatTime, chatTitle,i+11,"NULL", img,src2);
+
                 }
                 else
                 {
@@ -396,15 +383,16 @@ public class chatTest extends BaseTest {
         else
         {
             for (int i = 0; i < 10; i++) {
-                WebElement chat = hamaList.get(i);
+                WebElement chat = hamaList.get(9-i);
                 String chatTime = chat.findElement(cssSelector("span.styles_span__I9y9v.styles_date__Jyh31")).getText();
                 chatTime=chatTime.substring(0, 5);
+                img="NULL";
                 String chatTitle = chat.findElement(cssSelector("h2.styles_title__WrHVK")).getText();
                 String chatMain = chat.findElement(cssSelector("h2.styles_title__WrHVK")).getText();
                 chatTitle=replaceMore(chatTitle);
-                List<WebElement> linksImgHamal = hamaList.get(i).findElements((By.cssSelector("img[alt='image-widget']")));
+                List<WebElement> linksImgHamal = hamaList.get(9-i).findElements((By.cssSelector("img[alt='image-widget']")));
                 if (linksImgHamal.size() > 0) {
-                    String img = linksImgHamal.get(0).getAttribute("src");
+                    img = linksImgHamal.get(0).getAttribute("src");
                     System.out.println(img);
                     mongoUpdateData("Hamal",date, chatTime, chatTitle,i+11,"NULL", img,src2);
                 }
