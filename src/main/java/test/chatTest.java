@@ -153,6 +153,7 @@ public class chatTest extends BaseTest {
                 .serverApi(serverApi)
                 .build();
         //  mongoClient = new MongoClient(settings);//"localhost" , 27017 );
+
         System.out.println("Created Mongo Connection successfully");
 
         MongoClient mongoClient = MongoClients.create(connectionString);
