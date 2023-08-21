@@ -369,6 +369,8 @@ public class chatTest extends BaseTest {
                 String chatMain = chat.findElement(cssSelector("h2.styles_title__WrHVK")).getText();
                 chatTitle=replaceMore(chatTitle);
                 List<WebElement> linksImgHamal = hamaList.get(9-i).findElements((By.cssSelector("img[alt='image-widget']")));
+
+                System.out.println("linksImgHamal "+linksImgHamal.size());
                 if (linksImgHamal.size() > 0) {
                     img = linksImgHamal.get(0).getAttribute("src");
                     mongoInsertData("Hamal",date, chatTime, chatTitle,i+11,"NULL", img,src2);
@@ -376,12 +378,21 @@ public class chatTest extends BaseTest {
                 }
                 else
                 {
-                    mongoInsertData("Hamal",date, chatTime, chatTitle,i+11,"NULL", "NULL",src2);
+                    List<WebElement> linksImgHamalB = hamaList.get(9-i).findElements((By.cssSelector("img[alt='gallery main picture']")));
+                    if (linksImgHamalB.size() > 0) {
+                        img = linksImgHamalB.get(0).getAttribute("src");
+                        mongoInsertData("Hamal",date, chatTime, chatTitle,i+11,"NULL", img,src2);
+
+                    }
+                    else {
+                        mongoInsertData("Hamal", date, chatTime, chatTitle, i + 11, "NULL", "NULL", src2);
+                    }
                 }
             }
         }
         else
         {
+
             for (int i = 0; i < 10; i++) {
                 WebElement chat = hamaList.get(9-i);
                 String chatTime = chat.findElement(cssSelector("span.styles_span__I9y9v.styles_date__Jyh31")).getText();
@@ -391,6 +402,7 @@ public class chatTest extends BaseTest {
                 String chatMain = chat.findElement(cssSelector("h2.styles_title__WrHVK")).getText();
                 chatTitle=replaceMore(chatTitle);
                 List<WebElement> linksImgHamal = hamaList.get(9-i).findElements((By.cssSelector("img[alt='image-widget']")));
+                System.out.println("linksImgHamal "+linksImgHamal.size());
                 if (linksImgHamal.size() > 0) {
                     img = linksImgHamal.get(0).getAttribute("src");
                     System.out.println(img);
@@ -398,7 +410,15 @@ public class chatTest extends BaseTest {
                 }
                 else
                 {
-                    mongoUpdateData("Hamal",date, chatTime, chatTitle,i+11,"NULL", "NULL",src2);
+                    List<WebElement> linksImgHamalB = hamaList.get(9-i).findElements((By.cssSelector("img[alt='gallery main picture']")));
+                    if (linksImgHamalB.size() > 0) {
+                        img = linksImgHamalB.get(0).getAttribute("src");
+                        mongoInsertData("Hamal",date, chatTime, chatTitle,i+11,"NULL", img,src2);
+
+                    }
+                    else {
+                        mongoInsertData("Hamal", date, chatTime, chatTitle, i + 11, "NULL", "NULL", src2);
+                    }
                 }
             }
         }

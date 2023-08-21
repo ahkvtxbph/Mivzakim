@@ -6,8 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Mivzakim" />
+        <module name="mivzakim" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="mivzakim" target="17" />
+      <module name="Mivzakim" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>
