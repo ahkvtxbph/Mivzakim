@@ -32,9 +32,11 @@ import static org.openqa.selenium.By.tagName;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class chatTest extends BaseTest {
     BaseTest BaseTest;
+    chatTest chatTest;
     MongoClient mongoClient;
     MongoDatabase db;
     int count = 0;
+    int sumTotal=0;
     String password = "a72Y53vXKjhNDAJn";
     String userName = "shilo";
     String h1 = "";
@@ -52,7 +54,7 @@ public class chatTest extends BaseTest {
 
     private String ynetChat = "https://www.ynet.co.il/news/category/184";
     private String n12Chat = "https://www.n12.co.il/";
-    private String hamal = "https://hamal.co.il/";
+    private String hamalSite = "https://hamal.co.il/";
 
     By ynetMainChat = By.cssSelector("div.Accordion");
     By ynetAd = By.cssSelector("div#closemaavron");
@@ -142,9 +144,9 @@ public class chatTest extends BaseTest {
     }
 
     public void createDb(String site) {
-     // String connectionString = "mongodb+srv://shilo:a72Y53vXKjhNDAJn@chatnews.uaripa9.mongodb.net/?retryWrites=true&w=majority";
-        String connectionString = "mongodb+srv://yaal-2122:wsmJQ3ggbFxFtHX@cluster0.qnlfmxm.mongodb.net/GQ-Dashboard?retryWrites=true&w=majority";
-        //  String connectionString = "mongodb+srv://yaal-2122:wsmJQ3ggbFxFtHX@cluster0.qnlfmxm.mongodb.net/GQ-Dashboard?retryWrites=true&w=majority";
+        //   String connectionString = "mongodb+srv://shilo:a72Y53vXKjhNDAJn@chatnews.uaripa9.mongodb.net/?retryWrites=true&w=majority";
+       String connectionString = "mongodb+srv://yaal-2122:wsmJQ3ggbFxFtHX@cluster0.qnlfmxm.mongodb.net/GQ-Dashboard?retryWrites=true&w=majority";
+
         ServerApi serverApi = ServerApi.builder()
                 .version(ServerApiVersion.V1)
                 .build();
@@ -162,12 +164,79 @@ public class chatTest extends BaseTest {
         System.out.println("Get database is successful");
     }
 
-    public Boolean dropTable(int i, String site) {
+    public boolean dropTable(int i, String site,String val) {
+        boolean status=false;
+        int count=0;
+        int temp=0;
+        String db1=this.dbName1;
         MongoCollection<Document> collection = db.getCollection(site);
-        if (collection.countDocuments() < i) {
-            return true;
+        temp=(int)collection.countDocuments();
+        sumTotal=temp;
+        System.out.println("sumTotal DropTable- "+sumTotal);
+       System.out.println("DB COUNT - "+temp);
+       if (temp<i)
+       {
+
+           return false;
+       }
+       else
+       {
+           return true;
+       }
+/*
+        switch(i) {
+            case (5): {
+                if ((temp < 5)&&(temp > 0))
+                {
+                    count=temp;
+                }
+                else {
+                        count=5;
+                }
+                break;
+            }
+            case (10):
+            {
+                if (temp == 5)
+                {
+                    count=10;
+                }
+                else if (temp <10){
+                    if (collection.countDocuments() < i)
+                    {
+                        count=(i-temp);
+                    }
+                }
+                else
+              {
+
+              }
+
+                break;
         }
-        return false;
+            case (20):
+            {
+                if (collection.countDocuments() == 10)
+                {
+                    status=true;
+                    count=20;
+                }
+                else {
+                    if (collection.countDocuments() < i)
+                    {
+                        count=(i-(int)collection.countDocuments());
+                    }
+                }
+
+                break;
+            }
+            default:
+                break;
+                // code block
+        }
+
+        return count;*/
+
     }
 
 
@@ -201,6 +270,14 @@ public class chatTest extends BaseTest {
                         .append("title", title)
                         .append("image", imageLink)
                         .append("video", video));
+      /*  try {
+            db.getCollection(site).updateOne(searchQuery, updateQuery);
+        }
+        catch(Exception e) {
+                         //(String author, String date, String time, String title, int count,String video, String imageLink, String site);
+            mongoInsertData(author, date, time, title,  count,video, imageLink,  site);
+            //  Block of code to handle errors
+        }*/
         db.getCollection(site).updateOne(searchQuery, updateQuery);
     }
 
@@ -211,7 +288,7 @@ public class chatTest extends BaseTest {
     }
 
     @Test
-    public void test01_ynetChat() throws Exception {
+    public  void test01_ynetChat() throws Exception {
 
         driver.get(ynetChat);
         String date = getDate();
@@ -219,8 +296,11 @@ public class chatTest extends BaseTest {
         WebElement industries = driver.findElement(ynetMainChat);
         List<WebElement> links = industries.findElements(cssSelector("div.titleRow   "));
         System.out.println(links.size());
-        if (dropTable(5, src1)) {
-            for (int i = 0; i < 5; i++) {
+       System.out.println(dropTable(5, src1,"Ynet"));
+        System.out.println("sumTotal 1- "+sumTotal);
+        if (!dropTable(5, src1,"Ynet")) {
+
+            for (int i=0; i < 5; i++) {
                 WebElement chat = links.get(4-i);
                 String chatTime = chat.findElement(cssSelector("div.date")).getText();
                 String chatTitle = chat.findElement(cssSelector("div.title")).getText();
@@ -242,12 +322,11 @@ public class chatTest extends BaseTest {
                 mongoUpdateData("Ynet", date, chatTime, chatTitle, i + 1,"NULL", "NULL", src1);
             }
         }
-
     }
 
 
     @Test
-    public void test02_n12Chat_Ver_2() throws InterruptedException {
+    public void test02_n12Chat() throws Exception {
 
         String currHandle = driver.getWindowHandle();
         driver.get(n12Chat);
@@ -257,18 +336,37 @@ public class chatTest extends BaseTest {
         Thread.sleep(750);
         driver.findElement(n12FullChatButton).click();
         Thread.sleep(750);
-        WebElement industriesN12 = driver.findElement(n12ChatCase);//n12ChatCase);n12ChatCase
+       /* WebElement industriesN12 = driver.findElement(n12ChatCase);//n12ChatCase);n12ChatCase
         List<WebElement> linksN12 = industriesN12.findElements(n12SubChat);//"div.mc-message-wrap")); "div.mc-reporter__messages"
-        System.out.println("linksN12 Size " + linksN12.size());
-        System.out.println(dropTable(10, src2));
+        System.out.println("linksN12 Size " + linksN12.size());*/
+//        System.out.println(dropTable(10, src2));
 
-        if (dropTable(10,src2)) {
+        if (!dropTable(10,src2,"N12")) {
+            System.out.println("sumTotal 2 - "+sumTotal);
+           if ((sumTotal<10)&&(sumTotal>5)) {
+               db.getCollection(src2).drop();
+               test01_ynetChat();
+               driver.get(n12Chat);
+
+               Thread.sleep(1000);
+               //Thread.sleep(750);
+               driver.findElement(n12FullChatButton).click();
+
+           }
+
+            WebElement industriesN12 = driver.findElement(n12ChatCase);//n12ChatCase);n12ChatCase
+            List<WebElement> linksN12 = industriesN12.findElements(n12SubChat);//"div.mc-message-wrap")); "div.mc-reporter__messages"
+
+
+            Thread.sleep(1000);
         for (int i = 0; i < 5; i++) {
             Thread.sleep(1000);
             img="NULL";
             WebElement chat = linksN12.get(4-i);
             String chatTime = chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//mc-message-footer
             String chatTitle = chat.findElement(cssSelector("div#side-chat div.mc-extendable-text__content")).getText();//chat.findElement(cssSelector("div.mc-extendable-text__content")).getText();//mc-extendable-text__content
+            System.out.println("linksN12 Size " + linksN12.size());
+            System.out.println("chatTitle "+chatTitle+" "+(4-i));
             chatTitle=replaceMore(chatTitle);
             System.out.println(chatTitle+" chatTitle");
             List<WebElement> linksImgN12Vid =chat.findElements((By.cssSelector("div.mc-play-btn")));
@@ -286,6 +384,7 @@ public class chatTest extends BaseTest {
                 vidSrc = st.get(0).getAttribute("src").toString();
              //   System.out.println("9 " + vidSrc);
                 mongoInsertData("N12",date, chatTime, chatTitle,i+6, vidSrc, "NULL",src2);
+                System.out.println("02+1");
                 driver.findElement(XButton).click();
             }
             else
@@ -296,17 +395,20 @@ public class chatTest extends BaseTest {
                     img=img.substring(23, img.length()-3);
                     System.out.println(i+" "+date+" "+chatTime+" "+chatTitle+" "+img);
                     mongoInsertData("N12",date, chatTime, chatTitle,i+6,"NULL", img,src2);
+                    System.out.println("02+2");
                 }
                 else
                 {
                     mongoInsertData("N12",date, chatTime, chatTitle,i+6, "NULL", "NULL",src2);
+                    System.out.println("02+3");
                 }
             }
         }
 
  }
         else
-        {
+        {  WebElement industriesN12 = driver.findElement(n12ChatCase);//n12ChatCase);n12ChatCase
+            List<WebElement> linksN12 = industriesN12.findElements(n12SubChat);//"div.mc-message-wrap")); "div.mc-reporter__messages"
             for (int i = 0; i < 5; i++) {
                 img="NULL";
                 Thread.sleep(1000);
@@ -352,8 +454,8 @@ public class chatTest extends BaseTest {
    }
 
     @Test
-    public void test03_Hamal() throws InterruptedException {
-        driver.get(hamal);
+    public void test03_Hamal() throws Exception {
+        driver.get(hamalSite);
         String date = getDate();
         String chatDate = "";
         String img="NULL";
@@ -361,7 +463,16 @@ public class chatTest extends BaseTest {
         WebElement hamal = driver.findElement(hamalMain);
         List<WebElement> hamaList = hamal.findElements(hamalSecond);
         System.out.println("hamaList Size " + hamaList.size());
-        if (dropTable(20, src3)) {
+        if (!dropTable(20, src3,"Hamal")) {
+           System.out.println("sumTotal 3- "+sumTotal);
+            if ((sumTotal<20)&&(sumTotal>10))
+            { db.getCollection(src2).drop();
+                test01_ynetChat();
+                test02_n12Chat();
+                driver.get(hamalSite);}
+
+
+            Thread.sleep(1000);
             for (int i = 0; i < 10; i++) {
                 img="NULL";
                 WebElement chat = hamaList.get(9-i);
@@ -374,7 +485,7 @@ public class chatTest extends BaseTest {
                 System.out.println("linksImgHamal "+linksImgHamal.size());
                 if (linksImgHamal.size() > 0) {
                     img = linksImgHamal.get(0).getAttribute("src");
-                    mongoInsertData("Hamal",date, chatTime, chatTitle,i+11,"NULL", img,src2);
+                    mongoInsertData("Hamal",date, chatTime, chatTitle,i+11,"NULL", img,src3);
 
                 }
                 else
@@ -382,18 +493,17 @@ public class chatTest extends BaseTest {
                     List<WebElement> linksImgHamalB = hamaList.get(9-i).findElements((By.cssSelector("img[alt='gallery main picture']")));
                     if (linksImgHamalB.size() > 0) {
                         img = linksImgHamalB.get(0).getAttribute("src");
-                        mongoInsertData("Hamal",date, chatTime, chatTitle,i+11,"NULL", img,src2);
+                        mongoInsertData("Hamal",date, chatTime, chatTitle,i+11,"NULL", img,src3);
 
                     }
                     else {
-                        mongoInsertData("Hamal", date, chatTime, chatTitle, i + 11, "NULL", "NULL", src2);
+                        mongoInsertData("Hamal", date, chatTime, chatTitle, i + 11, "NULL", "NULL", src3);
                     }
                 }
             }
         }
         else
         {
-
             for (int i = 0; i < 10; i++) {
                 WebElement chat = hamaList.get(9-i);
                 String chatTime = chat.findElement(cssSelector("span.styles_span__I9y9v.styles_date__Jyh31")).getText();
@@ -423,5 +533,6 @@ public class chatTest extends BaseTest {
                 }
             }
         }
+
     }
 }
