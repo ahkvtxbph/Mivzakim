@@ -289,15 +289,16 @@ public class chatTest extends BaseTest {
 
     @Test
     public  void test01_ynetChat() throws Exception {
-
+        boolean bTemp;
         driver.get(ynetChat);
         String date = getDate();
         String chatDate = "";
         WebElement industries = driver.findElement(ynetMainChat);
         List<WebElement> links = industries.findElements(cssSelector("div.titleRow   "));
         System.out.println(links.size());
-       System.out.println(dropTable(5, src1,"Ynet"));
-        System.out.println("sumTotal 1- "+sumTotal);
+        bTemp=dropTable(5, src1,"Ynet");
+        if (sumTotal>20)
+        {db.getCollection(src2).drop();};
         if (!dropTable(5, src1,"Ynet")) {
 
             for (int i=0; i < 5; i++) {
