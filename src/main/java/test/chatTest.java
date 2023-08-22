@@ -289,6 +289,7 @@ public class chatTest extends BaseTest {
 
     @Test
     public  void test01_ynetChat() throws Exception {
+        db.getCollection(src2).drop();
         boolean bTemp;
         driver.get(ynetChat);
         String date = getDate();
@@ -337,7 +338,7 @@ public class chatTest extends BaseTest {
         Thread.sleep(750);
         driver.findElement(n12FullChatButton).click();
         Thread.sleep(750);
-       /* WebElement industriesN12 = driver.findElement(n12ChatCase);//n12ChatCase);n12ChatCase
+      /*  WebElement industriesN12 = driver.findElement(n12ChatCase);//n12ChatCase);n12ChatCase
         List<WebElement> linksN12 = industriesN12.findElements(n12SubChat);//"div.mc-message-wrap")); "div.mc-reporter__messages"
         System.out.println("linksN12 Size " + linksN12.size());*/
 //        System.out.println(dropTable(10, src2));
@@ -355,12 +356,11 @@ public class chatTest extends BaseTest {
 
            }
 
+
+        //    Thread.sleep(1000);
+        for (int i = 0; i < 5; i++) {
             WebElement industriesN12 = driver.findElement(n12ChatCase);//n12ChatCase);n12ChatCase
             List<WebElement> linksN12 = industriesN12.findElements(n12SubChat);//"div.mc-message-wrap")); "div.mc-reporter__messages"
-
-
-            Thread.sleep(1000);
-        for (int i = 0; i < 5; i++) {
             Thread.sleep(1000);
             img="NULL";
             WebElement chat = linksN12.get(4-i);
@@ -466,7 +466,7 @@ public class chatTest extends BaseTest {
         System.out.println("hamaList Size " + hamaList.size());
         if (!dropTable(20, src3,"Hamal")) {
            System.out.println("sumTotal 3- "+sumTotal);
-            if ((sumTotal<20)&&(sumTotal>10))
+            if ((sumTotal>20))
             { db.getCollection(src2).drop();
                 test01_ynetChat();
                 test02_n12Chat();
@@ -480,6 +480,7 @@ public class chatTest extends BaseTest {
                 String chatTime = chat.findElement(cssSelector("span.styles_span__I9y9v.styles_date__Jyh31")).getText();
                 String chatTitle = chat.findElement(cssSelector("h2.styles_title__WrHVK")).getText();
                 String chatMain = chat.findElement(cssSelector("h2.styles_title__WrHVK")).getText();
+                chatTime=chatTime.substring(0, 5);
                 chatTitle=replaceMore(chatTitle);
                 List<WebElement> linksImgHamal = hamaList.get(9-i).findElements((By.cssSelector("img[alt='image-widget']")));
 
