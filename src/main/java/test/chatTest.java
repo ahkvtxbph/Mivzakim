@@ -530,11 +530,11 @@ public class chatTest extends BaseTest {
                     List<WebElement> linksImgHamalB = hamaList.get(9-i).findElements((By.cssSelector("img[alt='gallery main picture']")));
                     if (linksImgHamalB.size() > 0) {
                         img = linksImgHamalB.get(0).getAttribute("src");
-                        mongoInsertData("Hamal",date, chatTime, chatTitle,i+11,"NULL", img,src2);
+                        mongoUpdateData("Hamal",date, chatTime, chatTitle,i+11,"NULL", img,src2);
 
                     }
                     else {
-                        mongoInsertData("Hamal", date, chatTime, chatTitle, i + 11, "NULL", "NULL", src2);
+                        mongoUpdateData("Hamal", date, chatTime, chatTitle, i + 11, "NULL", "NULL", src2);
                     }
                 }
             }
