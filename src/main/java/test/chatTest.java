@@ -64,7 +64,7 @@ public class chatTest extends BaseTest {
     By n12AllChat = By.cssSelector("button.mc-enter-btn");
     By n12OpenCase = By.cssSelector("div.mc-feed.mc-feed_shown.default-root-close-chat button.mc-enter-btn");
     By n12ChatCase = By.cssSelector("div#side-chat");//"div.mc-feed.mc-feed_shown.default-root-close-chat");
-    By n12SubChat = By.cssSelector("div.mc-reporter__messages");
+    By n12SubChat = By.cssSelector("div.mc-reporter__messages div.mc-message-content.mc-message-content_open");
     By hamalMain=By.cssSelector("div#__next");
     By hamalSecond=By.tagName("article");
     By n12ChatOpen = By.cssSelector("div.mc-app.mc-topic.active");
