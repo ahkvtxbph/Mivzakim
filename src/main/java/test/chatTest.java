@@ -64,7 +64,7 @@ public class chatTest extends BaseTest {
     By n12AllChat = By.cssSelector("button.mc-enter-btn");
     By n12OpenCase = By.cssSelector("div.mc-feed.mc-feed_shown.default-root-close-chat button.mc-enter-btn");
     By n12ChatCase = By.cssSelector("div#side-chat");//"div.mc-feed.mc-feed_shown.default-root-close-chat");
-    By n12SubChat = By.cssSelector("div.mc-reporter__messages div.mc-message-content.mc-message-content_open");
+    By n12SubChat = By.cssSelector("div.mc-reporter__messages");
     By hamalMain=By.cssSelector("div#__next");
     By hamalSecond=By.tagName("article");
     By n12ChatOpen = By.cssSelector("div.mc-app.mc-topic.active");
@@ -144,7 +144,7 @@ public class chatTest extends BaseTest {
     }
 
     public void createDb(String site) {
-        //   String connectionString = "mongodb+srv://shilo:a72Y53vXKjhNDAJn@chatnews.uaripa9.mongodb.net/?retryWrites=true&w=majority";
+        //  String connectionString = "mongodb+srv://shilo:a72Y53vXKjhNDAJn@chatnews.uaripa9.mongodb.net/?retryWrites=true&w=majority";
        String connectionString = "mongodb+srv://yaal-2122:wsmJQ3ggbFxFtHX@cluster0.qnlfmxm.mongodb.net/GQ-Dashboard?retryWrites=true&w=majority";
 
         ServerApi serverApi = ServerApi.builder()
@@ -350,24 +350,25 @@ public class chatTest extends BaseTest {
                db.getCollection(src2).drop();
                test01_ynetChat();
                driver.get(n12Chat);
-
-               Thread.sleep(1000);
+                Thread.sleep(1000);
                //Thread.sleep(750);
                driver.findElement(n12FullChatButton).click();
-
            }
 
 
         //    Thread.sleep(1000);
         for (int i = 0; i < 5; i++) {
+            driver.get(n12Chat);
+            Thread.sleep(750);
+            driver.findElement(n12FullChatButton).click();
             WebElement industriesN12 = driver.findElement(n12ChatCase);//n12ChatCase);n12ChatCase
             List<WebElement> linksN12 = industriesN12.findElements(n12SubChat);//"div.mc-message-wrap")); "div.mc-reporter__messages"
             Thread.sleep(1000);
             img="NULL";
             WebElement chat = linksN12.get(4-i);
             String chatTime = chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//mc-message-footer
-            String chatTitle = chat.findElement(cssSelector("div#side-chat div.mc-extendable-text__content")).getText();//chat.findElement(cssSelector("div.mc-extendable-text__content")).getText();//mc-extendable-text__content
-            System.out.println("linksN12 Size " + linksN12.size());
+            String chatTitle = chat.findElement(cssSelector("div.mc-message-content.mc-message-content_open")).getText();//div#side-chat div.mc-extendable-text__content  chat.findElement(cssSelector("div.mc-extendable-text__content")).getText();//mc-extendable-text__content
+            System.out.println("linksN12 Size " + linksN12.size());//div.mc-message-content.mc-message-content_open
             System.out.println("chatTitle "+chatTitle+" "+(4-i));
             chatTitle=replaceMore(chatTitle);
             System.out.println(chatTitle+" chatTitle");
@@ -377,9 +378,10 @@ public class chatTest extends BaseTest {
               //  System.out.println("VIdeo Shilo 5");
                 Thread.sleep(1000);
              //   System.out.println("7 " + linksImgN12Vid.get(0));
-                WebElement vidClick = linksImgN12Vid.get(0);
+                //WebElement vidClick = linksImgN12Vid.get(0);
+                linksImgN12Vid.get(0).click();
               //  System.out.println("8 " + vidClick);
-                vidClick.click();
+                //vidClick.click();
                 By streamSource = By.cssSelector("div.mc-glr-video-wrap");
                 WebElement streamSrc = driver.findElement(streamSource);
                 List<WebElement> st = streamSrc.findElements(By.cssSelector("video source"));
@@ -416,7 +418,7 @@ public class chatTest extends BaseTest {
                 Thread.sleep(1000);
                 WebElement chat = linksN12.get(4-i);
                 String chatTime = chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//mc-message-footer
-                String chatTitle = chat.findElement(cssSelector("div#side-chat div.mc-extendable-text__content")).getText();//chat.findElement(cssSelector("div.mc-extendable-text__content")).getText();//mc-extendable-text__content
+                String chatTitle = chat.findElement(cssSelector("div.mc-message-content.mc-message-content_open")).getText();//chat.findElement(cssSelector("div.mc-extendable-text__content")).getText();//mc-extendable-text__content
                 System.out.println("chatTitle - "+i+" "+chatTitle);
                 chatTitle=replaceMore(chatTitle);
                 List<WebElement> linksImgN12Vid = linksN12.get(4-i).findElements((By.cssSelector("div.mc-play-btn")));
@@ -425,9 +427,10 @@ public class chatTest extends BaseTest {
                     //  System.out.println("VIdeo Shilo 5");
                     Thread.sleep(1000);
                     //   System.out.println("7 " + linksImgN12Vid.get(0));
-                    WebElement vidClick = linksImgN12Vid.get(0);
+                    //WebElement vidClick = linksImgN12Vid.get(0);
                     //  System.out.println("8 " + vidClick);
-                    vidClick.click();
+                    linksImgN12Vid.get(0).click();
+                    //vidClick.click();
                     By streamSource = By.cssSelector("div.mc-glr-video-wrap");
                     WebElement streamSrc = driver.findElement(streamSource);
                     List<WebElement> st = streamSrc.findElements(By.cssSelector("video source"));
