@@ -289,7 +289,7 @@ public class chatTest extends BaseTest {
 
     @Test
     public  void test01_ynetChat() throws Exception {
-        db.getCollection(src2).drop();
+     //   db.getCollection(src2).drop();
         boolean bTemp;
         driver.get(ynetChat);
         String date = getDate();
@@ -298,8 +298,9 @@ public class chatTest extends BaseTest {
         List<WebElement> links = industries.findElements(cssSelector("div.titleRow   "));
         System.out.println(links.size());
         bTemp=dropTable(5, src1,"Ynet");
-        if (sumTotal>20)
-        {db.getCollection(src2).drop();};
+        if ((sumTotal>20))
+        {System.out.println("sumTotal 1 - "+sumTotal);
+            db.getCollection(src2).drop();};
         if (!dropTable(5, src1,"Ynet")) {
 
             for (int i=0; i < 5; i++) {
@@ -466,7 +467,7 @@ public class chatTest extends BaseTest {
         System.out.println("hamaList Size " + hamaList.size());
         if (!dropTable(20, src3,"Hamal")) {
            System.out.println("sumTotal 3- "+sumTotal);
-            if ((sumTotal>20))
+            if ((sumTotal>20)||((sumTotal<20)&&(sumTotal>10)))
             { db.getCollection(src2).drop();
                 test01_ynetChat();
                 test02_n12Chat();
