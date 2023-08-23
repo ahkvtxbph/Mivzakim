@@ -486,7 +486,7 @@ public class chatTest extends BaseTest {
                 String chatMain = chat.findElement(cssSelector("h2.styles_title__WrHVK")).getText();
                 chatTime=chatTime.substring(0, 5);
                 chatTitle=replaceMore(chatTitle);
-                  List<WebElement> linksImgHamal = hamaList.get(9-i).findElements((By.cssSelector("div.styles_imageContainer__7yyQf")));//"img[alt='image-widget']"
+                  List<WebElement> linksImgHamal = hamaList.get(9-i).findElements((By.cssSelector("div.styles_imageContainer__7yyQf img")));//"img[alt='image-widget']"
 
               //  List<WebElement> linksImgHamal = hamaList.get(9-i).findElements((By.cssSelector("img[alt='gallery main picture']")));
 
@@ -499,7 +499,7 @@ public class chatTest extends BaseTest {
                 }
                 else
                 {
-                    List<WebElement> linksImgHamalB = hamaList.get(9-i).findElements((By.cssSelector("div.styles_imageContainer__7yyQf")));//"img[alt='gallery main picture']"
+                    List<WebElement> linksImgHamalB = hamaList.get(9-i).findElements((By.cssSelector("div.styles_imageContainer__7yyQf img")));//"img[alt='gallery main picture']"
                     if (linksImgHamalB.size() > 0) {
                         img = linksImgHamalB.get(0).getAttribute("src");
                         System.out.println("img insert B-"+img);
@@ -522,8 +522,8 @@ public class chatTest extends BaseTest {
                 String chatTitle = chat.findElement(cssSelector("h2.styles_title__WrHVK")).getText();
                 String chatMain = chat.findElement(cssSelector("h2.styles_title__WrHVK")).getText();
                 chatTitle=replaceMore(chatTitle);
-                List<WebElement> linksImgHamal = hamaList.get(9-i).findElements((By.cssSelector("div.styles_imageContainer__7yyQf")));//img[alt='image-widget']")));
-                List<WebElement> linksImgHamalB = hamaList.get(9-i).findElements((By.cssSelector("div.styles_imageContainer__7yyQf")));//"img[alt='gallery main picture']"
+                List<WebElement> linksImgHamal = hamaList.get(9-i).findElements((By.cssSelector("div.styles_imageContainer__7yyQf img")));//img[alt='image-widget']")));
+                List<WebElement> linksImgHamalB = hamaList.get(9-i).findElements((By.cssSelector("div.styles_imageContainer__7yyQf img")));//"img[alt='gallery main picture']"
                 System.out.println("linksImgHamal "+linksImgHamal.size());
                 System.out.println("linksImgHamalB "+linksImgHamalB.size());
                 if (linksImgHamal.size() > 0) {
