@@ -13,7 +13,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 
 import java.io.IOException;
-import java.lang.constant.DynamicConstantDesc;
+//import java.lang.constant.DynamicConstantDesc;
 import java.text.SimpleDateFormat;
 
 import java.time.Duration;
@@ -152,8 +152,8 @@ public class chatTest extends BaseTest {
     }
 
     public void createDb(String site) {
-         // String connectionString = "mongodb+srv://shilo:a72Y53vXKjhNDAJn@chatnews.uaripa9.mongodb.net/?retryWrites=true&w=majority";
-         String connectionString = "mongodb+srv://yaal-2122:wsmJQ3ggbFxFtHX@cluster0.qnlfmxm.mongodb.net/GQ-Dashboard?retryWrites=true&w=majority";
+          String connectionString = "mongodb+srv://shilo:a72Y53vXKjhNDAJn@chatnews.uaripa9.mongodb.net/?retryWrites=true&w=majority";
+        // String connectionString = "mongodb+srv://yaal-2122:wsmJQ3ggbFxFtHX@cluster0.qnlfmxm.mongodb.net/GQ-Dashboard?retryWrites=true&w=majority";
 
         ServerApi serverApi = ServerApi.builder()
                 .version(ServerApiVersion.V1)
@@ -538,6 +538,7 @@ public class chatTest extends BaseTest {
             { db.getCollection(src2).drop();
                 test01_ynetChat();
                 test02_n12Chat();
+                test03_Rotter();
                 driver.get(hamalSite);}
 
 

@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="mivzakim" target="17" />
+      <module name="mivzakim" target="1.8" />
       <module name="Mivzakim" target="17" />
     </bytecodeTargetLevel>
   </component>
