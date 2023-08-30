@@ -61,7 +61,7 @@ public class chatTest extends BaseTest {
     By ynetMainChat = By.cssSelector("div.Accordion");
     By ynetAd = By.cssSelector("div#closemaavron");
 
-    By RotterMainScoop=By.cssSelector("table[cellspacing='1']");
+    By RotterMainScoop=By.cssSelector("table[cellspacing='0'] table[cellspacing='1']");
 
     By rotterScoop=By.cssSelector("td[width='70%']");
     By rotterTime=By.cssSelector("td[align='center'] font.text13b");
@@ -481,7 +481,7 @@ public class chatTest extends BaseTest {
         driver.get(RotterScoop);
         Thread.sleep(1500);
 
-
+       WebElement rotterMainA = driver.findElement(ynetMainChat);
         WebElement rotterMain = driver.findElement(RotterMainScoop);
         List<WebElement> rotterScoopTitle = rotterMain.findElements(rotterScoop);
         List<WebElement> rotterScoopTime=rotterMain.findElements(rotterTime);
