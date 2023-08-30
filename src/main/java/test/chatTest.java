@@ -301,7 +301,7 @@ public class chatTest extends BaseTest {
 
     @Test
     public  void test01_ynetChat() throws Exception {
-     //   db.getCollection(src2).drop();
+      //   db.getCollection(src2).drop();
         boolean bTemp;
         driver.get(ynetChat);
         String date = getDate();
