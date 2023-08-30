@@ -152,8 +152,8 @@ public class chatTest extends BaseTest {
     }
 
     public void createDb(String site) {
-          String connectionString = "mongodb+srv://shilo:a72Y53vXKjhNDAJn@chatnews.uaripa9.mongodb.net/?retryWrites=true&w=majority";
-        // String connectionString = "mongodb+srv://yaal-2122:wsmJQ3ggbFxFtHX@cluster0.qnlfmxm.mongodb.net/GQ-Dashboard?retryWrites=true&w=majority";
+         // String connectionString = "mongodb+srv://shilo:a72Y53vXKjhNDAJn@chatnews.uaripa9.mongodb.net/?retryWrites=true&w=majority";
+         String connectionString = "mongodb+srv://yaal-2122:wsmJQ3ggbFxFtHX@cluster0.qnlfmxm.mongodb.net/GQ-Dashboard?retryWrites=true&w=majority";
 
         ServerApi serverApi = ServerApi.builder()
                 .version(ServerApiVersion.V1)
@@ -294,6 +294,10 @@ public class chatTest extends BaseTest {
         Date date = new Date();
         return String.copyValueOf(formatter.format(date).toCharArray());
     }
+
+      /*  public  void test00_dropTable()  {
+           db.getCollection(src2).drop();
+    }*/
 
     @Test
     public  void test01_ynetChat() throws Exception {
@@ -479,7 +483,7 @@ public class chatTest extends BaseTest {
 
 
         WebElement rotterMain = driver.findElement(RotterMainScoop);
-        List<WebElement> rotterScoopTitle = rotterMain.findElements(cssSelector("td[width='70%']"));
+        List<WebElement> rotterScoopTitle = rotterMain.findElements(rotterScoop);
         List<WebElement> rotterScoopTime=rotterMain.findElements(rotterTime);
         List<WebElement> rotterScoopDate=rotterMain.findElements(rotterDate);
        System.out.println("rotterScoopTitle - "+rotterScoopTitle.size());
