@@ -481,7 +481,7 @@ public class chatTest extends BaseTest {
         driver.get(RotterScoop);
         Thread.sleep(1500);
 
-       WebElement rotterMainA = driver.findElement(ynetMainChat);
+
         WebElement rotterMain = driver.findElement(RotterMainScoop);
         List<WebElement> rotterScoopTitle = rotterMain.findElements(rotterScoop);
         List<WebElement> rotterScoopTime=rotterMain.findElements(rotterTime);
@@ -489,7 +489,8 @@ public class chatTest extends BaseTest {
        System.out.println("rotterScoopTitle - "+rotterScoopTitle.size());
        System.out.println("rotterScoopTime - "+rotterScoopTime.size());
        System.out.println("rotterScoopDate - "+rotterScoopDate.size());
-
+       System.out.println("Rotter Size " + rotterScoopTitle.size());
+       System.out.println("sumTotal 3- "+sumTotal);
        if ((sumTotal<15)&&(sumTotal>10)) {
            db.getCollection(src2).drop();
            test01_ynetChat();
@@ -538,7 +539,7 @@ public class chatTest extends BaseTest {
         List<WebElement> hamaList = hamal.findElements(hamalSecond);
         System.out.println("hamaList Size " + hamaList.size());
         if (!dropTable(20, src4,"Hamal")) {
-           System.out.println("sumTotal 3- "+sumTotal);
+           System.out.println("sumTotal 4- "+sumTotal);
             if ((sumTotal>20)||((sumTotal<20)&&(sumTotal>15)))
             { db.getCollection(src2).drop();
                 test01_ynetChat();
