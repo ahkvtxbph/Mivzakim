@@ -489,6 +489,7 @@ public class chatTest extends BaseTest {
        System.out.println("rotterScoopTitle - "+rotterScoopTitle.size());
        System.out.println("rotterScoopTime - "+rotterScoopTime.size());
        System.out.println("rotterScoopDate - "+rotterScoopDate.size());
+
        if ((sumTotal<15)&&(sumTotal>10)) {
            db.getCollection(src2).drop();
            test01_ynetChat();
@@ -547,71 +548,71 @@ public class chatTest extends BaseTest {
 
 
             Thread.sleep(1000);
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < 5; i++) {
                 img="NULL";
-                WebElement chat = hamaList.get(9-i);
+                WebElement chat = hamaList.get(4-i);
                 String chatTime = chat.findElement(cssSelector("span.styles_span__I9y9v.styles_date__Jyh31")).getText();
                 String chatTitle = chat.findElement(cssSelector("h2.styles_title__WrHVK")).getText();
                 String chatMain = chat.findElement(cssSelector("h2.styles_title__WrHVK")).getText();
                 chatTime=chatTime.substring(0, 5);
                 chatTitle=replaceMore(chatTitle);
-                  List<WebElement> linksImgHamal = hamaList.get(9-i).findElements((By.cssSelector("div.styles_imageContainer__7yyQf img")));//"img[alt='image-widget']"
+                  List<WebElement> linksImgHamal = hamaList.get(4-i).findElements((By.cssSelector("div.styles_imageContainer__7yyQf img")));//"img[alt='image-widget']"
 
-              //  List<WebElement> linksImgHamal = hamaList.get(9-i).findElements((By.cssSelector("img[alt='gallery main picture']")));
+              //  List<WebElement> linksImgHamal = hamaList.get(4-i).findElements((By.cssSelector("img[alt='gallery main picture']")));
 
                 System.out.println("linksImgHamal "+linksImgHamal.size());
                 if (linksImgHamal.size() > 0) {
                     img = linksImgHamal.get(0).getAttribute("src");
                     System.out.println("img insert -"+img);
-                    mongoInsertData("Hamal",date, chatTime, chatTitle,i+11,"NULL", img,src3);
+                    mongoInsertData("Hamal",date, chatTime, chatTitle,i+16,"NULL", img,src3);
 
                 }
                 else
                 {
-                    List<WebElement> linksImgHamalB = hamaList.get(9-i).findElements((By.cssSelector("div.styles_imageContainer__7yyQf img")));//"img[alt='gallery main picture']"
+                    List<WebElement> linksImgHamalB = hamaList.get(4-i).findElements((By.cssSelector("div.styles_imageContainer__7yyQf img")));//"img[alt='gallery main picture']"
                     if (linksImgHamalB.size() > 0) {
                         img = linksImgHamalB.get(0).getAttribute("src");
                         System.out.println("img insert B-"+img);
-                        mongoInsertData("Hamal",date, chatTime, chatTitle,i+11,"NULL", img,src3);
+                        mongoInsertData("Hamal",date, chatTime, chatTitle,i+16,"NULL", img,src3);
 
                     }
                     else {
-                        mongoInsertData("Hamal", date, chatTime, chatTitle, i + 11, "NULL", "NULL", src3);
+                        mongoInsertData("Hamal", date, chatTime, chatTitle, i + 15, "NULL", "NULL", src3);
                     }
                 }
             }
         }
         else
         {
-            for (int i = 0; i < 10; i++) {
-                WebElement chat = hamaList.get(9-i);
+            for (int i = 0; i < 5; i++) {
+                WebElement chat = hamaList.get(4-i);
                 String chatTime = chat.findElement(cssSelector("span.styles_span__I9y9v.styles_date__Jyh31")).getText();
                 chatTime=chatTime.substring(0, 5);
                 img="NULL";
                 String chatTitle = chat.findElement(cssSelector("h2.styles_title__WrHVK")).getText();
                 String chatMain = chat.findElement(cssSelector("h2.styles_title__WrHVK")).getText();
                 chatTitle=replaceMore(chatTitle);
-                List<WebElement> linksImgHamal = hamaList.get(9-i).findElements((By.cssSelector("div.styles_imageContainer__7yyQf img")));//img[alt='image-widget']")));
-                List<WebElement> linksImgHamalB = hamaList.get(9-i).findElements((By.cssSelector("div.styles_imageContainer__7yyQf img")));//"img[alt='gallery main picture']"
+                List<WebElement> linksImgHamal = hamaList.get(4-i).findElements((By.cssSelector("div.styles_imageContainer__7yyQf img")));//img[alt='image-widget']")));
+                List<WebElement> linksImgHamalB = hamaList.get(4-i).findElements((By.cssSelector("div.styles_imageContainer__7yyQf img")));//"img[alt='gallery main picture']"
                 System.out.println("linksImgHamal "+linksImgHamal.size());
                 System.out.println("linksImgHamalB "+linksImgHamalB.size());
                 if (linksImgHamal.size() > 0) {
                     img = linksImgHamal.get(0).getAttribute("src");
                     System.out.println("img update -"+img);
-                    mongoUpdateData("Hamal",date, chatTime, chatTitle,i+11,"NULL", img,src2);
+                    mongoUpdateData("Hamal",date, chatTime, chatTitle,i+16,"NULL", img,src2);
                 }
                 else if (linksImgHamalB.size() > 0)
                 {
-                   // List<WebElement> linksImgHamalB = hamaList.get(9-i).findElements((By.cssSelector("img[alt='gallery main picture']")));
+                   // List<WebElement> linksImgHamalB = hamaList.get(4-i).findElements((By.cssSelector("img[alt='gallery main picture']")));
                     //if (linksImgHamalB.size() > 0) {
                         img = linksImgHamalB.get(0).getAttribute("src");
                         System.out.println("img update B-"+img);
-                        mongoUpdateData("Hamal",date, chatTime, chatTitle,i+11,"NULL", img,src2);
+                        mongoUpdateData("Hamal",date, chatTime, chatTitle,i+16,"NULL", img,src2);
 
                     //}
                     }
                 else {
-                    mongoUpdateData("Hamal", date, chatTime, chatTitle, i + 11, "NULL", "NULL", src2);
+                    mongoUpdateData("Hamal", date, chatTime, chatTitle, i + 15, "NULL", "NULL", src2);
                 }
             }
         }
