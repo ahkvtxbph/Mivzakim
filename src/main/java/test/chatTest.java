@@ -480,7 +480,7 @@ public class chatTest extends BaseTest {
     public void test03_Rotter() throws Exception {
         driver.get(RotterScoop);
         Thread.sleep(1500);
-
+   System.out.println("Rotter -"+driver.getCurrentUrl());
 
         WebElement rotterMain = driver.findElement(RotterMainScoop);
         List<WebElement> rotterScoopTitle = rotterMain.findElements(rotterScoop);
@@ -490,7 +490,7 @@ public class chatTest extends BaseTest {
        System.out.println("rotterScoopTime - "+rotterScoopTime.size());
        System.out.println("rotterScoopDate - "+rotterScoopDate.size());
        System.out.println("Rotter Size " + rotterScoopTitle.size());
-       System.out.println("sumTotal 3- "+sumTotal);
+       System.out.println("sumTotal 3 - "+sumTotal);
        if ((sumTotal<15)&&(sumTotal>10)) {
            db.getCollection(src2).drop();
            test01_ynetChat();
@@ -499,8 +499,8 @@ public class chatTest extends BaseTest {
            Thread.sleep(1000);
 
        }
-
-       if (!dropTable(15, src1,"Rotter")) {
+   System.out.println("Rotte - "+dropTable(15, src3,"Rotter"));
+       if (!dropTable(15, src3,"Rotter")) {
 
            for (int i=0; i < 5; i++) {
                WebElement chat = rotterScoopTitle.get(4-i);
