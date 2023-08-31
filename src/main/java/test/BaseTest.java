@@ -23,7 +23,8 @@ public class BaseTest extends Throwable {
         resetPage();
         resetBrowser("chrome");
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
+         driver.manage().window().maximize();
+      //   driver.manage().window().minimize();
     }
 
     public static void resetBrowser(String browseReset) {
@@ -33,7 +34,7 @@ public class BaseTest extends Throwable {
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--remote-allow-origins=*");
             options.addArguments("disable-popup-blocking");
-            options.addArguments("--headless");
+            //options.addArguments("--headless");
             options.addExtensions (new File("src/data/addon/extension_1_50_0_0.crx"));
             driver = new ChromeDriver(options);
           //  driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);

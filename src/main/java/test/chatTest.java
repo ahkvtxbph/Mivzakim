@@ -61,7 +61,8 @@ public class chatTest extends BaseTest {
     By ynetMainChat = By.cssSelector("div.Accordion");
     By ynetAd = By.cssSelector("div#closemaavron");
 
-    By RotterMainScoop=By.cssSelector("table[cellspacing='0'] table[cellspacing='1']");
+    By RotterMainScoop=By.xpath("/html/body/table[5]/tbody/tr/td[2]/table/tbody/tr/td/table[2]");
+            // By.cssSelector("table[cellspacing='0'] table[cellspacing='1']");
 
     By rotterScoop=By.cssSelector("td[width='70%']");
     By rotterTime=By.cssSelector("td[align='center'] font.text13b");
@@ -294,10 +295,10 @@ public class chatTest extends BaseTest {
         Date date = new Date();
         return String.copyValueOf(formatter.format(date).toCharArray());
     }
-
-      /*  public  void test00_dropTable()  {
+    @Test
+        public  void test00_dropTable()  {
            db.getCollection(src2).drop();
-    }*/
+    }
 
     @Test
     public  void test01_ynetChat() throws Exception {
@@ -342,21 +343,18 @@ public class chatTest extends BaseTest {
 
     @Test
     public void test02_n12Chat() throws Exception {
+        String vidSrc = "";
 
-        String currHandle = driver.getWindowHandle();
+        int temp=0;
+        String img="NULL";
         driver.get(n12Chat);
         String date = getDate();
-        String vidSrc = "";
-        String img="NULL";
-        Thread.sleep(750);
+        String chatDate = "";
         driver.findElement(n12FullChatButton).click();
         Thread.sleep(750);
-        WebElement industriesN12 = driver.findElement(n12ChatCase);//n12ChatCase);n12ChatCase
-        List<WebElement> linksN12 = industriesN12.findElements(n12SubChat);//"div.mc-message-wrap")); "div.mc-reporter__messages"
-      /*  WebElement industriesN12 = driver.findElement(n12ChatCase);//n12ChatCase);n12ChatCase
-        List<WebElement> linksN12 = industriesN12.findElements(n12SubChat);//"div.mc-message-wrap")); "div.mc-reporter__messages"
-        System.out.println("linksN12 Size " + linksN12.size());*/
-//        System.out.println(dropTable(10, src2));
+        WebElement industriesN12 = driver.findElement(n12ChatCase);
+        List<WebElement> links = industriesN12.findElements(n12SubChat);
+        System.out.println("links.size() - "+links.size());
 
         if (!dropTable(10,src2,"N12")) {
             System.out.println("sumTotal 2 - "+sumTotal);
@@ -367,8 +365,7 @@ public class chatTest extends BaseTest {
                 Thread.sleep(1000);
                //Thread.sleep(750);
                driver.findElement(n12FullChatButton).click();
-                industriesN12 = driver.findElement(n12ChatCase);//n12ChatCase);n12ChatCase
-               linksN12 = industriesN12.findElements(n12SubChat);//"div.mc-message-wrap")); "div.mc-reporter__messages"
+               temp=1;
            }
 
 
@@ -377,18 +374,22 @@ public class chatTest extends BaseTest {
           //  driver.get(n12Chat);
             Thread.sleep(750);
            // driver.findElement(n12FullChatButton).click();
-
-             industriesN12 = driver.findElement(n12ChatCase);//n12ChatCase);n12ChatCase
-             linksN12 = industriesN12.findElements(n12SubChat);//"div.mc-message-wrap")); "div.mc-reporter__messages"
-
+        if (temp==1) {
+            industriesN12 = driver.findElement(n12ChatCase);//n12ChatCase);n12ChatCase
+            links = industriesN12.findElements(n12SubChat);//"div.mc-message-wrap")); "div.mc-reporter__messages"
+            temp=0;
+        }
+            System.out.println("links.size()2 - "+links.size());
             img="NULL";
             Thread.sleep(1000);
-            WebElement chat = linksN12.get(4-i);
-            String chatTime = chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//mc-message-footer
-            String chatTitle = chat.findElement(cssSelector("div.mc-message-content.mc-message-content_open")).getText();//div#side-chat div.mc-extendable-text__content  chat.findElement(csmc-extendable-text__content")).getText();//mc-extendable-text__content
-            System.out.println("linksN12 Size " + linksN12.size());//div.mc-message-content.mc-message-content_open
-            System.out.println("chatTime "+chatTime+" "+(4-i));
-            System.out.println("chatTitle "+chatTitle+" "+(4-i));
+
+            WebElement chat = links.get(4-i);//p.mc-message-footer__time
+            System.out.println(i+" chat.getText() - "+chat.getText());
+            String chatTime = chat.findElement(cssSelector("div.mc-message-footer")).getText();//chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//mc-message-footer
+            String chatTitle = chat.findElement(cssSelector("div.mc-extendable-text__content")).getText();//div#side-chat div.mc-extendable-text__content  chat.findElement(csmc-extendable-text__content")).getText();//mc-extendable-text__content
+           System.out.println("chatTime - "+chatTime+ " chatTitle "+chatTitle);
+            System.out.println("links Size " + links.size());//div.mc-message-content.mc-message-content_open
+
             chatTitle=replaceMore(chatTitle);
             System.out.println(chatTitle+" chatTitle");
             List<WebElement> linksImgN12Vid =chat.findElements((By.cssSelector("div.mc-play-btn")));
@@ -411,7 +412,7 @@ public class chatTest extends BaseTest {
             }
             else
             {
-                List<WebElement> linksImgN12 = linksN12.get(4-i).findElements((By.cssSelector("div.mc-content-media-item.mc-content-media-item_picture")));
+                List<WebElement> linksImgN12 = links.get(4-i).findElements((By.cssSelector("div.mc-content-media-item.mc-content-media-item_picture")));
                 if (linksImgN12.size()>0) {
                     img = linksImgN12.get(0).getAttribute("style");
                     img=img.substring(23, img.length()-3);
@@ -429,17 +430,21 @@ public class chatTest extends BaseTest {
 
  }
         else
-        {   industriesN12 = driver.findElement(n12ChatCase);//n12ChatCase);n12ChatCase
-             linksN12 = industriesN12.findElements(n12SubChat);//"div.mc-message-wrap")); "div.mc-reporter__messages"
+        {    if (temp==1) {
+            industriesN12 = driver.findElement(n12ChatCase);//n12ChatCase);n12ChatCase
+            links = industriesN12.findElements(n12SubChat);//"div.mc-message-wrap")); "div.mc-reporter__messages"
+            temp=0;
+        }
             for (int i = 0; i < 5; i++) {
                 img="NULL";
-                Thread.sleep(1000);
-                WebElement chat = linksN12.get(4-i);
+                Thread.sleep(750);
+                WebElement chat = links.get(4-i);
+                Thread.sleep(750);
                 String chatTime = chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//mc-message-footer
-                String chatTitle = chat.findElement(cssSelector("div.mc-message-content.mc-message-content_open")).getText();//div#side-chat div.mc-extendable-text__content  chat.findElement(csxtendable-text__content
+                String chatTitle = chat.findElement(cssSelector("div.mc-message-content.mc-message-content_open")).getText();//div#side-chat div.mc-extendable-text__content  chat.findElement(csxtendable-text__contentxtendable-text__content
                 System.out.println("chatTitle - "+i+" "+chatTitle);
                 chatTitle=replaceMore(chatTitle);
-                List<WebElement> linksImgN12Vid = linksN12.get(4-i).findElements((By.cssSelector("div.mc-play-btn")));
+                List<WebElement> linksImgN12Vid = links.get(4-i).findElements((By.cssSelector("div.mc-play-btn")));
                 System.out.println(linksImgN12Vid.size() + " vid");
                 if (linksImgN12Vid.size() > 0) {
                     //  System.out.println("VIdeo Shilo 5");
@@ -460,7 +465,7 @@ public class chatTest extends BaseTest {
                 }
                 else
                 {
-                    List<WebElement> linksImgN12 = linksN12.get(4-i).findElements((By.cssSelector("div.mc-content-media-item.mc-content-media-item_picture")));
+                    List<WebElement> linksImgN12 = links.get(4-i).findElements((By.cssSelector("div.mc-content-media-item.mc-content-media-item_picture")));
                     if (linksImgN12.size()>0) {
                         img = linksImgN12.get(0).getAttribute("style");
                         img=img.substring(23, img.length()-3);
@@ -480,15 +485,15 @@ public class chatTest extends BaseTest {
     public void test03_Rotter() throws Exception {
         driver.get(RotterScoop);
         Thread.sleep(1500);
-   System.out.println("Rotter -"+driver.getCurrentUrl());
+   System.out.println("Rotter - "+driver.getCurrentUrl());
 
         WebElement rotterMain = driver.findElement(RotterMainScoop);
         List<WebElement> rotterScoopTitle = rotterMain.findElements(rotterScoop);
         List<WebElement> rotterScoopTime=rotterMain.findElements(rotterTime);
         List<WebElement> rotterScoopDate=rotterMain.findElements(rotterDate);
        System.out.println("rotterScoopTitle - "+rotterScoopTitle.size());
-       System.out.println("rotterScoopTime - "+rotterScoopTime.size());
-       System.out.println("rotterScoopDate - "+rotterScoopDate.size());
+      // System.out.println("rotterScoopTime - "+rotterScoopTime.size());
+      // System.out.println("rotterScoopDate - "+rotterScoopDate.size());
        System.out.println("Rotter Size " + rotterScoopTitle.size());
        System.out.println("sumTotal 3 - "+sumTotal);
        if ((sumTotal<15)&&(sumTotal>10)) {
