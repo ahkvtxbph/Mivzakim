@@ -552,7 +552,6 @@ public class chatTest extends BaseTest {
                 test03_Rotter();
                 driver.get(hamalSite);}
 
-
             Thread.sleep(1000);
             for (int i = 0; i < 5; i++) {
                 img="NULL";
@@ -583,7 +582,7 @@ public class chatTest extends BaseTest {
 
                     }
                     else {
-                        mongoInsertData("Hamal", date, chatTime, chatTitle, i + 15, "NULL", "NULL", src3);
+                        mongoInsertData("Hamal", date, chatTime, chatTitle, i + 16, "NULL", "NULL", src3);
                     }
                 }
             }
@@ -618,7 +617,7 @@ public class chatTest extends BaseTest {
                     //}
                     }
                 else {
-                    mongoUpdateData("Hamal", date, chatTime, chatTitle, i + 15, "NULL", "NULL", src2);
+                    mongoUpdateData("Hamal", date, chatTime, chatTitle, i + 16, "NULL", "NULL", src2);
                 }
             }
         }
