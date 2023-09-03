@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 public class BaseTest extends Throwable {
     public static WebDriver driver;
     static chatTest chatTest;
+
     public BaseTest(WebDriver driver)
     {
         this.driver=driver;
