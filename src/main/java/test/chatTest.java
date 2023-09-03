@@ -295,10 +295,10 @@ public class chatTest extends BaseTest {
         Date date = new Date();
         return String.copyValueOf(formatter.format(date).toCharArray());
     }
-//     @Test
-//        public  void test00_dropTable()  {
-//           db.getCollection(src2).drop();
-//    }
+   /*  @Test
+        public  void test00_dropTable()  {
+           db.getCollection(src2).drop();
+    }*/
 
     @Test
     public  void test01_ynetChat() throws Exception {
