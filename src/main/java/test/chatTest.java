@@ -57,9 +57,12 @@ public class chatTest extends BaseTest {
     private String n12Chat = "https://www.n12.co.il/";
     private String hamalSite = "https://hamal.co.il/";
     private String RotterScoop="https://rotter.net/forum/listforum.php";
+    private String maarivChat = "https://www.maariv.co.il/breaking-news";
 
     By ynetMainChat = By.cssSelector("div.Accordion");
     By ynetAd = By.cssSelector("div#closemaavron");
+
+    By maarivMainChat=By.cssSelector("div.breaking-news-body");
 
     By RotterMainScoop=By.xpath("/html/body/table[5]/tbody/tr/td[2]/table/tbody/tr/td/table[2]");
             // By.cssSelector("table[cellspacing='0'] table[cellspacing='1']");
@@ -622,5 +625,45 @@ public class chatTest extends BaseTest {
             }
         }
 
+    }
+
+    @Test
+    public  void test06_maarivChat() throws Exception {
+        // db.getCollection(src2).drop();
+        boolean bTemp;
+        driver.get(maarivChat);
+        String date = getDate();
+        String chatDate = "";
+        WebElement industries = driver.findElement(maarivMainChat);
+        List<WebElement> links = industries.findElements(cssSelector("div.breaking-news-item"));
+        System.out.println(links.size());
+        bTemp=dropTable(5, src1,"Ynet");
+        if ((sumTotal>25))
+        {System.out.println("sumTotal 6 - "+sumTotal);
+            db.getCollection(src2).drop();};
+        if (!dropTable(25, src1,"Maariv")) {
+
+            for (int i=0; i < 5; i++) {
+                WebElement chat = links.get(4-i);
+                String chatTime = chat.findElement(cssSelector("div.breaking-news-item-date")).getText();
+                String chatTitle = chat.findElement(cssSelector("div.breaking-news-item-title-container span.breaking-news-item-title")).getText();
+                date=chat.findElement(cssSelector("div.breaking-news-item-time")).getText();
+                chatTitle=replaceMore(chatTitle);
+
+                chatDate = date + " " + chatTime;
+                System.out.println("chatDate " + chatDate);
+                mongoInsertData("Maariv", date, chatTime, chatTitle, i + 21,"NULL", "NULL", src1);
+            }
+        } else {
+            for (int i = 0; i < 5; i++) {
+                WebElement chat = links.get(4-i);
+                String chatTime = chat.findElement(cssSelector("div.date")).getText();
+                String chatTitle = chat.findElement(cssSelector("div.title")).getText();
+                chatTitle=replaceMore(chatTitle);
+                chatDate = date + " " + chatTime;
+                System.out.println("chatDate " + chatDate);
+                mongoUpdateData("Maariv", date, chatTime, chatTitle, i + 21,"NULL", "NULL", src1);
+            }
+        }
     }
 }
