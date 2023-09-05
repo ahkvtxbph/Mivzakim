@@ -645,9 +645,9 @@ public class chatTest extends BaseTest {
 
             for (int i=0; i < 5; i++) {
                 WebElement chat = links.get(4-i);
-                String chatTime = chat.findElement(cssSelector("div.breaking-news-item-date")).getText();
+                String chatTime = chat.findElement(cssSelector("div.breaking-news-item-time")).getText();
                 String chatTitle = chat.findElement(cssSelector("div.breaking-news-item-title-container span.breaking-news-item-title")).getText();
-                date=chat.findElement(cssSelector("div.breaking-news-item-time")).getText();
+                date=chat.findElement(cssSelector("div.breaking-news-item-date")).getText();
                 chatTitle=replaceMore(chatTitle);
 
                 chatDate = date + " " + chatTime;
