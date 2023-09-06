@@ -298,7 +298,7 @@ public class chatTest extends BaseTest {
         Date date = new Date();
         return String.copyValueOf(formatter.format(date).toCharArray());
     }
- /*    @Test
+/*   @Test
         public  void test00_dropTable()  {
            db.getCollection(src2).drop();
     }*/
@@ -548,7 +548,7 @@ public class chatTest extends BaseTest {
         System.out.println("hamaList Size " + hamaList.size());
         if (!dropTable(20, src4,"Hamal")) {
            System.out.println("sumTotal 4- "+sumTotal);
-            if ((sumTotal>25)||((sumTotal<20)&&(sumTotal>15)))
+            if ((sumTotal<20)&&(sumTotal>15))
             { db.getCollection(src2).drop();
                 test01_ynetChat();
                 test02_n12Chat();
@@ -628,7 +628,7 @@ public class chatTest extends BaseTest {
     }
 
     @Test
-    public  void test06_maarivChat() throws Exception {
+    public  void test05_maarivChat() throws Exception {
         // db.getCollection(src2).drop();
         boolean bTemp;
         driver.get(maarivChat);
@@ -638,9 +638,18 @@ public class chatTest extends BaseTest {
         List<WebElement> links = industries.findElements(cssSelector("div.breaking-news-item"));
         System.out.println(links.size());
         bTemp=dropTable(5, src1,"Ynet");
-        if ((sumTotal>25))
-        {System.out.println("sumTotal 6 - "+sumTotal);
-            db.getCollection(src2).drop();};
+        if ((sumTotal>25)) {
+            System.out.println("sumTotal 6 - " + sumTotal);
+
+            if ((sumTotal < 25) && (sumTotal > 20)) {
+                db.getCollection(src2).drop();
+                test01_ynetChat();
+                test02_n12Chat();
+                test03_Rotter();
+                test04_Hamal();
+                driver.get(maarivChat);
+            }
+        }
         if (!dropTable(25, src1,"Maariv")) {
 
             for (int i=0; i < 5; i++) {
