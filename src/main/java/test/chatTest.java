@@ -298,7 +298,7 @@ public class chatTest extends BaseTest {
         Date date = new Date();
         return String.copyValueOf(formatter.format(date).toCharArray());
     }
-   /*  @Test
+ /*    @Test
         public  void test00_dropTable()  {
            db.getCollection(src2).drop();
     }*/
@@ -314,7 +314,7 @@ public class chatTest extends BaseTest {
         List<WebElement> links = industries.findElements(cssSelector("div.titleRow   "));
         System.out.println(links.size());
         bTemp=dropTable(5, src1,"Ynet");
-        if ((sumTotal>20))
+        if ((sumTotal>25))
         {System.out.println("sumTotal 1 - "+sumTotal);
             db.getCollection(src2).drop();};
         if (!dropTable(5, src1,"Ynet")) {
@@ -548,7 +548,7 @@ public class chatTest extends BaseTest {
         System.out.println("hamaList Size " + hamaList.size());
         if (!dropTable(20, src4,"Hamal")) {
            System.out.println("sumTotal 4- "+sumTotal);
-            if ((sumTotal>20)||((sumTotal<20)&&(sumTotal>15)))
+            if ((sumTotal>25)||((sumTotal<20)&&(sumTotal>15)))
             { db.getCollection(src2).drop();
                 test01_ynetChat();
                 test02_n12Chat();
