@@ -666,9 +666,11 @@ public class chatTest extends BaseTest {
         } else {
             for (int i = 0; i < 5; i++) {
                 WebElement chat = links.get(4-i);
-                String chatTime = chat.findElement(cssSelector("div.date")).getText();
-                String chatTitle = chat.findElement(cssSelector("div.title")).getText();
+                String chatTime = chat.findElement(cssSelector("div.breaking-news-item-time")).getText();
+                String chatTitle = chat.findElement(cssSelector("div.breaking-news-item-title-container span.breaking-news-item-title")).getText();
+                date=chat.findElement(cssSelector("div.breaking-news-item-date")).getText();
                 chatTitle=replaceMore(chatTitle);
+
                 chatDate = date + " " + chatTime;
                 System.out.println("chatDate " + chatDate);
                 mongoUpdateData("Maariv", date, chatTime, chatTitle, i + 21,"NULL", "NULL", src1);
