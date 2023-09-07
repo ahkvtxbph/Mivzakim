@@ -640,7 +640,7 @@ public class chatTest extends BaseTest {
         bTemp=dropTable(5, src1,"Ynet");
         if ((sumTotal>25)) {
             System.out.println("sumTotal 6 - " + sumTotal);
-
+            db.getCollection(src2).drop();
             if ((sumTotal < 25) && (sumTotal > 20)) {
                 db.getCollection(src2).drop();
                 test01_ynetChat();
