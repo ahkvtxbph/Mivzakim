@@ -13,7 +13,6 @@ public class Main {
         for (Failure failure : result.getFailures()) {
             System.out.println(failure.toString());
 
-
         }
     }
 }
