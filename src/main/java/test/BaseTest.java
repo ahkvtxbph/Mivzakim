@@ -31,15 +31,15 @@ public class BaseTest extends Throwable {
 
     public static void resetBrowser(String browseReset) {
         if (browseReset.equals("chrome")) {
-            System.setProperty("webdriver.chrome.driver", "src/data/chromedriver.exe");
+           // System.setProperty("webdriver.chrome.driver", "src/data/chromedriver.exe");
 
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--remote-allow-origins=*");
             options.addArguments("disable-popup-blocking");
-            //options.addArguments("--headless");
-            options.addExtensions (new File("src/data/addon/extension_1_50_0_0.crx"));
+          //  options.addArguments("--headless");
+           options.addExtensions (new File("src/data/addon/extension_1_50_0_0.crx"));
             driver = new ChromeDriver(options);
-          //  driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+            driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         } else {
             System.setProperty("webdriver.gecko.driver", "src/data/geckodriver.exe");
             driver = new FirefoxDriver();

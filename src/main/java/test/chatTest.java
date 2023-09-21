@@ -10,6 +10,7 @@ import org.bson.Document;
 import org.junit.*;
 import org.junit.runners.MethodSorters;
 import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.interactions.Actions;
 
 import java.io.IOException;
@@ -444,17 +445,24 @@ public class chatTest extends BaseTest {
         }
         else
         {    if (temp==1) {
-            industriesN12 = driver.findElement(n12ChatCase);//n12ChatCase);n12ChatCase
-            links = industriesN12.findElements(n12SubChat);//"div.mc-message-wrap")); "div.mc-reporter__messages"
+            industriesN12B = driver.findElement(n12ChatCase);//n12ChatCase);n12ChatCase
+            linksB = industriesN12B.findElements(n12SubChat);//"div.mc-message-wrap")); "div.mc-reporter__messages"
             temp=0;
         }
             for (int i = 0; i < 5; i++) {
                 img="NULL";
                 Thread.sleep(750);
-                WebElement chat = links.get(4-i);
+                industriesN12B = driver.findElement(n12ChatCase);//n12ChatCase);n12ChatCase
+                linksB = industriesN12B.findElements(n12SubChat);
+                System.out.println("linksB- "+linksB.size());
+
+                WebElement chat = linksB.get(4-i);
                 Thread.sleep(750);
-                String chatTime = chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//mc-message-footer
-                String chatTitle = chat.findElement(cssSelector("div.mc-message-content.mc-message-content_open")).getText();//div#side-chat div.mc-extendable-text__content  chat.findElement(csxtendable-text__contentxtendable-text__content
+                System.out.println("chatTitle - "+chat.findElement(cssSelector("div.mc-extendable-text__content")).getText());
+              //  String chatTime = chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//mc-message-footer
+               // String chatTitle = chat.findElement(cssSelector("div.mc-message-content.mc-message-content_open")).getText();//div#side-chat div.mc-extendable-text__content  chat.findElement(csxtendable-text__contentxtendable-text__content
+                String chatTime = chat.findElement(cssSelector("div.mc-message-footer")).getText();//chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//mc-message-footer
+                String chatTitle = chat.findElement(cssSelector("div.mc-extendable-text__content")).getText();//div#side-chat div.mc-extendable-text__content  chat.findElement(csmc-extendable-text__content")).getText();//mc-extendable-text__content
                 System.out.println("chatTitle - "+i+" "+chatTitle);
                 chatTitle=replaceMore(chatTitle);
                 List<WebElement> linksImgN12Vid = links.get(4-i).findElements((By.cssSelector("div.mc-play-btn")));
