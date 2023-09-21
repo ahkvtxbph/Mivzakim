@@ -32,7 +32,10 @@ import static org.openqa.selenium.By.tagName;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class chatTest extends BaseTest {
     BaseTest BaseTest;
-    chatTest chatTest;
+
+    WebElement industriesN12B;
+    List<WebElement> linksB;
+//    chatTest chatTest;
     MongoClient mongoClient;
     MongoDatabase db;
     int count = 0;
@@ -176,6 +179,11 @@ public class chatTest extends BaseTest {
         System.out.println("Get database is successful");
     }
 
+    public void makeList() {
+        industriesN12B = driver.findElement(n12ChatCase);
+        linksB = industriesN12B.findElements(n12SubChat);
+    }
+
     public boolean dropTable(int i, String site,String val) {
         boolean status=false;
         int count=0;
@@ -304,7 +312,8 @@ public class chatTest extends BaseTest {
     }*/
 
     @Test
-    public  void test01_ynetChat() throws Exception {
+    public  void test01_ynetChat()  {
+
       // db.getCollection(src2).drop();
         boolean bTemp;
         driver.get(ynetChat);
@@ -313,6 +322,7 @@ public class chatTest extends BaseTest {
         WebElement industries = driver.findElement(ynetMainChat);
         List<WebElement> links = industries.findElements(cssSelector("div.titleRow   "));
         System.out.println(links.size());
+        bTemp=dropTable(5, src1,"Ynet");
         bTemp=dropTable(5, src1,"Ynet");
         if ((sumTotal>25))
         {System.out.println("sumTotal 1 - "+sumTotal);
@@ -361,77 +371,77 @@ public class chatTest extends BaseTest {
 
         if (!dropTable(10,src2,"N12")) {
             System.out.println("sumTotal 2 - "+sumTotal);
-           if ((sumTotal<10)&&(sumTotal>5)) {
-               db.getCollection(src2).drop();
-               test01_ynetChat();
-               driver.get(n12Chat);
+            if ((sumTotal<10)&&(sumTotal>5)) {
+                db.getCollection(src2).drop();
+                test01_ynetChat();
+                driver.get(n12Chat);
                 Thread.sleep(1000);
-               //Thread.sleep(750);
-               driver.findElement(n12FullChatButton).click();
-               temp=1;
-           }
-
-
-        //    Thread.sleep(1000);
-        for (int i = 0; i < 5; i++) {
-          //  driver.get(n12Chat);
-            Thread.sleep(750);
-           // driver.findElement(n12FullChatButton).click();
-        if (temp==1) {
-            industriesN12 = driver.findElement(n12ChatCase);//n12ChatCase);n12ChatCase
-            links = industriesN12.findElements(n12SubChat);//"div.mc-message-wrap")); "div.mc-reporter__messages"
-            temp=0;
-        }
-            System.out.println("links.size()2 - "+links.size());
-            img="NULL";
-            Thread.sleep(1000);
-
-            WebElement chat = links.get(4-i);//p.mc-message-footer__time
-            System.out.println(i+" chat.getText() - "+chat.getText());
-            String chatTime = chat.findElement(cssSelector("div.mc-message-footer")).getText();//chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//mc-message-footer
-            String chatTitle = chat.findElement(cssSelector("div.mc-extendable-text__content")).getText();//div#side-chat div.mc-extendable-text__content  chat.findElement(csmc-extendable-text__content")).getText();//mc-extendable-text__content
-           System.out.println("chatTime - "+chatTime+ " chatTitle "+chatTitle);
-            System.out.println("links Size " + links.size());//div.mc-message-content.mc-message-content_open
-
-            chatTitle=replaceMore(chatTitle);
-            System.out.println(chatTitle+" chatTitle");
-            List<WebElement> linksImgN12Vid =chat.findElements((By.cssSelector("div.mc-play-btn")));
-            System.out.println(linksImgN12Vid.size() + " vid");
-            if (linksImgN12Vid.size() > 0) {
-                Thread.sleep(1000);
-             //   System.out.println("7 " + linksImgN12Vid.get(0));
-                //WebElement vidClick = linksImgN12Vid.get(0);
-                linksImgN12Vid.get(0).click();
-              //  System.out.println("8 " + vidClick);
-                //vidClick.click();
-                By streamSource = By.cssSelector("div.mc-glr-video-wrap");
-                WebElement streamSrc = driver.findElement(streamSource);
-                List<WebElement> st = streamSrc.findElements(By.cssSelector("video source"));
-                vidSrc = st.get(0).getAttribute("src").toString();
-             //   System.out.println("9 " + vidSrc);
-                mongoInsertData("N12",date, chatTime, chatTitle,i+6, vidSrc, "NULL",src2);
-                System.out.println("02+1");
-                driver.findElement(XButton).click();
+                //Thread.sleep(750);
+                driver.findElement(n12FullChatButton).click();
+                temp=1;
             }
-            else
-            {
-                List<WebElement> linksImgN12 = links.get(4-i).findElements((By.cssSelector("div.mc-content-media-item.mc-content-media-item_picture")));
-                if (linksImgN12.size()>0) {
-                    img = linksImgN12.get(0).getAttribute("style");
-                    img=img.substring(23, img.length()-3);
-                    System.out.println(i+" "+date+" "+chatTime+" "+chatTitle+" "+img);
-                    mongoInsertData("N12",date, chatTime, chatTitle,i+6,"NULL", img,src2);
-                    System.out.println("02+2");
+
+
+            //    Thread.sleep(1000);
+            for (int i = 0; i < 5; i++) {
+                //  driver.get(n12Chat);
+                Thread.sleep(750);
+                // driver.findElement(n12FullChatButton).click();
+                if (temp==1) {
+                    industriesN12 = driver.findElement(n12ChatCase);//n12ChatCase);n12ChatCase
+                    links = industriesN12.findElements(n12SubChat);//"div.mc-message-wrap")); "div.mc-reporter__messages"
+                    temp=0;
+                }
+                System.out.println("links.size()2 - "+links.size());
+                img="NULL";
+                Thread.sleep(1000);
+
+                WebElement chat = links.get(4-i);//p.mc-message-footer__time
+                System.out.println(i+" chat.getText() - "+chat.getText());
+                String chatTime = chat.findElement(cssSelector("div.mc-message-footer")).getText();//chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//mc-message-footer
+                String chatTitle = chat.findElement(cssSelector("div.mc-extendable-text__content")).getText();//div#side-chat div.mc-extendable-text__content  chat.findElement(csmc-extendable-text__content")).getText();//mc-extendable-text__content
+                System.out.println("chatTime - "+chatTime+ " chatTitle "+chatTitle);
+                System.out.println("links Size " + links.size());//div.mc-message-content.mc-message-content_open
+
+                chatTitle=replaceMore(chatTitle);
+                System.out.println(chatTitle+" chatTitle");
+                List<WebElement> linksImgN12Vid =chat.findElements((By.cssSelector("div.mc-play-btn")));
+                System.out.println(linksImgN12Vid.size() + " vid");
+                if (linksImgN12Vid.size() > 0) {
+                    Thread.sleep(1000);
+                    //   System.out.println("7 " + linksImgN12Vid.get(0));
+                    //WebElement vidClick = linksImgN12Vid.get(0);
+                    linksImgN12Vid.get(0).click();
+                    //  System.out.println("8 " + vidClick);
+                    //vidClick.click();
+                    By streamSource = By.cssSelector("div.mc-glr-video-wrap");
+                    WebElement streamSrc = driver.findElement(streamSource);
+                    List<WebElement> st = streamSrc.findElements(By.cssSelector("video source"));
+                    vidSrc = st.get(0).getAttribute("src").toString();
+                    //   System.out.println("9 " + vidSrc);
+                    mongoInsertData("N12",date, chatTime, chatTitle,i+6, vidSrc, "NULL",src2);
+                    System.out.println("02+1");
+                    driver.findElement(XButton).click();
                 }
                 else
                 {
-                    mongoInsertData("N12",date, chatTime, chatTitle,i+6, "NULL", "NULL",src2);
-                    System.out.println("02+3");
+                    List<WebElement> linksImgN12 = links.get(4-i).findElements((By.cssSelector("div.mc-content-media-item.mc-content-media-item_picture")));
+                    if (linksImgN12.size()>0) {
+                        img = linksImgN12.get(0).getAttribute("style");
+                        img=img.substring(23, img.length()-3);
+                        System.out.println(i+" "+date+" "+chatTime+" "+chatTitle+" "+img);
+                        mongoInsertData("N12",date, chatTime, chatTitle,i+6,"NULL", img,src2);
+                        System.out.println("02+2");
+                    }
+                    else
+                    {
+                        mongoInsertData("N12",date, chatTime, chatTitle,i+6, "NULL", "NULL",src2);
+                        System.out.println("02+3");
+                    }
                 }
             }
-        }
 
- }
+        }
         else
         {    if (temp==1) {
             industriesN12 = driver.findElement(n12ChatCase);//n12ChatCase);n12ChatCase
@@ -482,7 +492,7 @@ public class chatTest extends BaseTest {
                 }
             }
         }
-   }
+    }
 
    @Test
     public void test03_Rotter() throws Exception {

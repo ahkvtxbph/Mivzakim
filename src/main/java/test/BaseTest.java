@@ -24,8 +24,9 @@ public class BaseTest extends Throwable {
         resetPage();
         resetBrowser("chrome");
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+
          driver.manage().window().maximize();
-         driver.manage().window().minimize();
+       //  driver.manage().window().minimize();
     }
 
     public static void resetBrowser(String browseReset) {
