@@ -34,8 +34,8 @@ import static org.openqa.selenium.By.tagName;
 public class chatTest extends BaseTest {
     BaseTest BaseTest;
 
-    WebElement industriesN12B;
-    List<WebElement> linksB;
+ //   WebElement industriesN12B;
+  //  List<WebElement> linksB;
 //    chatTest chatTest;
     MongoClient mongoClient;
     MongoDatabase db;
@@ -180,10 +180,7 @@ public class chatTest extends BaseTest {
         System.out.println("Get database is successful");
     }
 
-    public void makeList() {
-        industriesN12B = driver.findElement(n12ChatCase);
-        linksB = industriesN12B.findElements(n12SubChat);
-    }
+
 
     public boolean dropTable(int i, String site,String val) {
         boolean status=false;
@@ -445,27 +442,29 @@ public class chatTest extends BaseTest {
         }
         else
         {    if (temp==1) {
-            industriesN12B = driver.findElement(n12ChatCase);//n12ChatCase);n12ChatCase
-            linksB = industriesN12B.findElements(n12SubChat);//"div.mc-message-wrap")); "div.mc-reporter__messages"
+            WebElement industriesN12B  = driver.findElement(n12ChatCase);//n12ChatCase);n12ChatCase
+            List<WebElement> linksB = industriesN12B.findElements(n12SubChat);
             temp=0;
         }
             for (int i = 0; i < 5; i++) {
+                int position=4-i;
                 img="NULL";
                 Thread.sleep(750);
-                industriesN12B = driver.findElement(n12ChatCase);//n12ChatCase);n12ChatCase
-                linksB = industriesN12B.findElements(n12SubChat);
-                System.out.println("linksB- "+linksB.size());
+                WebElement industriesN12B  = driver.findElement(n12ChatCase);//n12ChatCase);n12ChatCase
+                List<WebElement> linksB = industriesN12B.findElements(n12SubChat);
+                System.out.println("linksB- "+linksB.size()+" "+position);
 
-                WebElement chat = linksB.get(4-i);
+                WebElement chat = linksB.get(position);
                 Thread.sleep(750);
-                System.out.println("chatTitle - "+chat.findElement(cssSelector("div.mc-extendable-text__content")).getText());
+
               //  String chatTime = chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//mc-message-footer
                // String chatTitle = chat.findElement(cssSelector("div.mc-message-content.mc-message-content_open")).getText();//div#side-chat div.mc-extendable-text__content  chat.findElement(csxtendable-text__contentxtendable-text__content
                 String chatTime = chat.findElement(cssSelector("div.mc-message-footer")).getText();//chat.findElement(cssSelector("p.mc-message-footer__time")).getText();//mc-message-footer
-                String chatTitle = chat.findElement(cssSelector("div.mc-extendable-text__content")).getText();//div#side-chat div.mc-extendable-text__content  chat.findElement(csmc-extendable-text__content")).getText();//mc-extendable-text__content
+                String chatTitle = chat.findElement(cssSelector("div.mc-extendable-text__content")).getText();//div#side-chat div.mc-extendable-text__content  chat.findElement(div.mc-extendable-text__content")).getText();//mc-extendable-text__content
                 System.out.println("chatTitle - "+i+" "+chatTitle);
-                chatTitle=replaceMore(chatTitle);
-                List<WebElement> linksImgN12Vid = links.get(4-i).findElements((By.cssSelector("div.mc-play-btn")));
+                if (chatTitle.length()>0)
+                {chatTitle=replaceMore(chatTitle);}
+                List<WebElement> linksImgN12Vid = links.get((4-i)).findElements((By.cssSelector("div.mc-play-btn")));
                 System.out.println(linksImgN12Vid.size() + " vid");
                 if (linksImgN12Vid.size() > 0) {
                     //  System.out.println("VIdeo Shilo 5");
@@ -486,7 +485,7 @@ public class chatTest extends BaseTest {
                 }
                 else
                 {
-                    List<WebElement> linksImgN12 = links.get(4-i).findElements((By.cssSelector("div.mc-content-media-item.mc-content-media-item_picture")));
+                    List<WebElement> linksImgN12 = links.get((4-i)).findElements((By.cssSelector("div.mc-content-media-item.mc-content-media-item_picture")));
                     if (linksImgN12.size()>0) {
                         img = linksImgN12.get(0).getAttribute("style");
                         img=img.substring(23, img.length()-3);
@@ -534,7 +533,8 @@ public class chatTest extends BaseTest {
                String chatDate = rotterScoopDate.get(4-i).getText();
                String chatTitle = rotterScoopTitle.get(4-i).getText();
 
-               chatTitle=replaceMore(chatTitle);
+               if (chatTitle.length()>0)
+               {chatTitle=replaceMore(chatTitle);}
 
              //  chatDate = date + " " + chatTime;
                System.out.println("chatDate " + chatDate+" "+"chatTime " + chatTime);
