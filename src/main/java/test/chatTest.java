@@ -314,7 +314,7 @@ public class chatTest extends BaseTest {
 
       // db.getCollection(src2).drop();
         boolean bTemp;
-        driver.get(ynetChat);
+        BaseTest.driver.get(ynetChat);
         String date = getDate();
         String chatDate = "";
         WebElement industries = driver.findElement(ynetMainChat);

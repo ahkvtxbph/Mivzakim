@@ -24,8 +24,7 @@ public class BaseTest extends Throwable {
         resetPage();
         resetBrowser("chrome");
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-
-         driver.manage().window().maximize();
+       driver.manage().window().maximize();
        //  driver.manage().window().minimize();
     }
 
@@ -33,13 +32,16 @@ public class BaseTest extends Throwable {
         if (browseReset.equals("chrome")) {
             System.setProperty("webdriver.chrome.driver", "src/data/chromedriver.exe");
 
-            ChromeOptions options = new ChromeOptions();
+          ChromeOptions options = new ChromeOptions();
             options.addArguments("--remote-allow-origins=*");
             options.addArguments("disable-popup-blocking");
           //  options.addArguments("--headless");
            options.addExtensions (new File("src/data/addon/extension_1_50_0_0.crx"));
-            driver = new ChromeDriver(options);
-            driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+           driver = new ChromeDriver(options);
+
+
+
+         //   driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         } else {
             System.setProperty("webdriver.gecko.driver", "src/data/geckodriver.exe");
             driver = new FirefoxDriver();
