@@ -30,8 +30,8 @@ public class BaseTest extends Throwable {
 
     public static void resetBrowser(String browseReset) {
         if (browseReset.equals("chrome")) {
-            System.setProperty("webdriver.chrome.driver", "src/data/chromedriver.exe");
-
+          //  System.setProperty("webdriver.chrome.driver", "src/data/chromedriver.exe");
+            System.setProperty("webdriver.chrome.driver", "C:/webdriver/chromedriver.exe");
           ChromeOptions options = new ChromeOptions();
             options.addArguments("--remote-allow-origins=*");
             options.addArguments("disable-popup-blocking");
