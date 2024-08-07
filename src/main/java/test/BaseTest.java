@@ -31,7 +31,7 @@ public class BaseTest extends Throwable {
 
     public static void resetBrowser(String browseReset) {
         if (browseReset.equals("chrome")) {
-            System.setProperty("webdriver.chrome.driver", "src/data/chromedrv.exe");
+            System.setProperty("webdriver.chrome.driver", "src/data/chromedriver.exe");
 
             ChromeOptions options = new ChromeOptions();
             options.addArguments("--remote-allow-origins=*");
