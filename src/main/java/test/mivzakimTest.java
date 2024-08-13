@@ -10,6 +10,7 @@ public class mivzakimTest extends BaseTest {
   chatTest chatTest;
   BaseTest BaseTest;
 
+
     public mivzakimTest() {
         super(driver);
         chatTest=new chatTest();
@@ -17,9 +18,10 @@ public class mivzakimTest extends BaseTest {
 
     @Test
     public void runTest() throws Exception {
-        BaseTest.testSetup();
         chatTest.createDb(chatTest.dbName1);
-
+      //    BaseTest.testSetup();
+        System.out.println("Driver Mivzakim "+driver);
+        Thread.sleep(3000);
         chatTest.test01_ynetChat();
         chatTest.test02_n12Chat();
         chatTest.test03_Rotter();

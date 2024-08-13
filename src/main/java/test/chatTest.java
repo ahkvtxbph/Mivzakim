@@ -310,11 +310,14 @@ public class chatTest extends BaseTest {
     }*/
 
     @Test
-    public  void test01_ynetChat()  {
+    public  void test01_ynetChat() throws InterruptedException {
 
+        System.out.println(driver+" Shilo test01");
       // db.getCollection(src2).drop();
         boolean bTemp;
-        BaseTest.driver.get(ynetChat);
+        System.out.println(driver);
+        driver.get(ynetChat);
+
         String date = getDate();
         String chatDate = "";
         WebElement industries = driver.findElement(ynetMainChat);
@@ -503,7 +506,7 @@ public class chatTest extends BaseTest {
 
    @Test
     public void test03_Rotter() throws Exception {
-        driver.get(RotterScoop);
+       driver.get(RotterScoop);
         Thread.sleep(1500);
    System.out.println("Rotter - "+driver.getCurrentUrl());
 
