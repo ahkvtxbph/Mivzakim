@@ -365,7 +365,7 @@ public class chatTest extends BaseTest {
         String date = getDate();
         String chatDate = "";
         driver.findElement(n12FullChatButton).click();
-        Thread.sleep(750);
+        Thread.sleep(1000);
         WebElement industriesN12 = driver.findElement(n12ChatCase);
         List<WebElement> links = industriesN12.findElements(n12SubChat);
         System.out.println("links.size() - "+links.size());
@@ -386,7 +386,7 @@ public class chatTest extends BaseTest {
             //    Thread.sleep(1000);
             for (int i = 0; i < 5; i++) {
                 //  driver.get(n12Chat);
-                Thread.sleep(750);
+                Thread.sleep(1000);
                 // driver.findElement(n12FullChatButton).click();
                 if (temp==1) {
                     industriesN12 = driver.findElement(n12ChatCase);//n12ChatCase);n12ChatCase
@@ -403,7 +403,7 @@ public class chatTest extends BaseTest {
                 String chatTitle = chat.findElement(cssSelector("div.mc-extendable-text__content")).getText();//div#side-chat div.mc-extendable-text__content  chat.findElement(csmc-extendable-text__content")).getText();//mc-extendable-text__content
                 System.out.println("chatTime - "+chatTime+ " chatTitle "+chatTitle);
                 System.out.println("links Size " + links.size());//div.mc-message-content.mc-message-content_open
-
+                Thread.sleep(1000);
                 chatTitle=replaceMore(chatTitle);
                 System.out.println(chatTitle+" chatTitle");
                 List<WebElement> linksImgN12Vid =chat.findElements((By.cssSelector("div.mc-play-btn")));
@@ -468,14 +468,15 @@ public class chatTest extends BaseTest {
                 if (chatTitle.length()>0)
                 {chatTitle=replaceMore(chatTitle);}
                 List<WebElement> linksImgN12Vid = links.get((4-i)).findElements((By.cssSelector("div.mc-play-btn")));
-                System.out.println(linksImgN12Vid.size() + " vid");
+                System.out.println(linksImgN12Vid.size() + " vid Shilo");
                 if (linksImgN12Vid.size() > 0) {
                     //  System.out.println("VIdeo Shilo 5");
                     Thread.sleep(1000);
                     //   System.out.println("7 " + linksImgN12Vid.get(0));
                     //WebElement vidClick = linksImgN12Vid.get(0);
                     //  System.out.println("8 " + vidClick);
-                    linksImgN12Vid.get(0).click();
+                    System.out.println(linksImgN12Vid.get(0)+" Position");
+                    linksImgN12Vid.get(position).click();
                     //vidClick.click();
                     By streamSource = By.cssSelector("div.mc-glr-video-wrap");
                     WebElement streamSrc = driver.findElement(streamSource);
