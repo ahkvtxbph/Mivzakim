@@ -686,7 +686,7 @@ public class chatTest extends BaseTest {
 
                 //  chatDate = date + " " + chatTime;
                 System.out.println("chatDate " + chatDate+" "+"chatTime " + chatTime);
-                mongoInsertData("now14", chatDate, chatTime, chatTitle, i + 11,"NULL", "NULL", src3);
+                mongoInsertData("Now14", chatDate, chatTime, chatTitle, i + 11,"NULL", "NULL", src3);
             }
         } else {
             for (int i = 0; i < 5; i++) {
@@ -699,7 +699,7 @@ public class chatTest extends BaseTest {
 
                 //  chatDate = date + " " + chatTime;
                 System.out.println("chatDate " + chatDate+" "+"chatTime " + chatTime);
-                mongoUpdateData("now14", chatDate, chatTime, chatTitle, i + 11,"NULL", "NULL", src3);
+                mongoUpdateData("Now14", chatDate, chatTime, chatTitle, i + 11,"NULL", "NULL", src3);
             }
         }
     }

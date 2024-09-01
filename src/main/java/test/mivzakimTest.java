@@ -19,23 +19,15 @@ public class mivzakimTest extends BaseTest {
     @Test
     public void runTest() throws Exception {
         chatTest.createDb(chatTest.dbName1);
-      /*    BaseTest.testSetup();
-        System.out.println("Driver Mivzakim "+driver);
-        Thread.sleep(3000);*/
-
-      // chatTest.test00_dropTable();
+      //    BaseTest.testSetup();
+    //   chatTest.test00_dropTable();
         chatTest.test01_ynetChat();
-
         chatTest.test02_Walla();
         chatTest.test03_Rotter();
         chatTest.test04_now14();;
         chatTest.test05_maarivChat();
       //  chatTest.test04_Hamal();
       //  chatTest.test02_n12Chat();
-
-
-
         BaseTest.end();
-
     }
 }

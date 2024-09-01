@@ -16,7 +16,7 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
        // Result result = JUnitCore.runClasses(chatTest.class);
-       System.out.println("Main ");
+       System.out.println("Main");
 
          Result result = JUnitCore.runClasses(mivzakimTest.class);
         for (Failure failure : result.getFailures()) {
