@@ -23,10 +23,11 @@ public class mivzakimTest extends BaseTest {
         System.out.println("Driver Mivzakim "+driver);
         Thread.sleep(3000);
         chatTest.test01_ynetChat();
-       // chatTest.test02_n12Chat();
         chatTest.test03_Rotter();
-        chatTest.test04_Hamal();
         chatTest.test05_maarivChat();
+        chatTest.test04_Hamal();
+        chatTest.test02_n12Chat();
+
 
         BaseTest.end();
 
