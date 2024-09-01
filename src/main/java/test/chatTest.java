@@ -60,6 +60,7 @@ public class chatTest extends BaseTest {
     private String ynetChat = "https://www.ynet.co.il/news/category/184";
     private String n12Chat = "https://www.n12.co.il/";
     private String hamalSite = "https://hamal.co.il/";
+    private String WallaScoop="https://news.walla.co.il/breaking";
     private String RotterScoop="https://rotter.net/forum/listforum.php";
     private String maarivChat = "https://www.maariv.co.il/breaking-news";
 
@@ -67,6 +68,10 @@ public class chatTest extends BaseTest {
     By ynetAd = By.cssSelector("div#closemaavron");
 
     By maarivMainChat=By.cssSelector("div.breaking-news-body");
+    By wallaMainScoop=By.cssSelector("div.right-side");
+    By wallaScoop=By.cssSelector("h1.breaking-item-title");
+    By wallaTime=By.cssSelector("h1.breaking-item-title span.red-time");
+    By wallaDate=By.cssSelector("div.header-titles h2");
 
     By RotterMainScoop=By.xpath("/html/body/table[5]/tbody/tr/td[2]/table/tbody/tr/td/table[2]");
             // By.cssSelector("table[cellspacing='0'] table[cellspacing='1']");
@@ -355,7 +360,7 @@ public class chatTest extends BaseTest {
     }
 
 
-    @Test
+    /*@Test
     public void test02_n12Chat() throws Exception {
         String vidSrc = "";
 
@@ -503,6 +508,69 @@ public class chatTest extends BaseTest {
                 }
             }
         }
+    }*/
+
+    @Test
+    public void test02_Walla() throws InterruptedException {
+       // db.getCollection(src2).drop();
+        int temp = 0;
+        String title="";
+        driver.get(WallaScoop);
+        Thread.sleep(1500);
+        WebElement wallaMain = driver.findElement(wallaMainScoop);
+        List<WebElement> wallaScoopTitle = wallaMain.findElements(wallaScoop);
+        List<WebElement> wallaScoopTime = wallaMain.findElements(wallaTime);
+        List<WebElement> wallaScoopDate = wallaMain.findElements(wallaDate);
+        System.out.println("wallaScoopTitle - " + wallaScoopTitle.size());
+        System.out.println("droptable rotter - "+dropTable(10, src2, "WALLA"));
+        if (!dropTable(10, src2, "N12")) {
+            System.out.println("sumTotal 2 - " + sumTotal);
+            if ((sumTotal < 10) && (sumTotal > 5)) {
+                db.getCollection(src2).drop();
+                test01_ynetChat();
+                driver.get(WallaScoop);
+                Thread.sleep(1000);
+                //Thread.sleep(750);
+                //  driver.findElement(n12FullChatButton).click();
+                temp = 1;
+            }
+        }
+
+        System.out.println("Walla - "+dropTable(10, src3,"Walla"));
+        if (!dropTable(10, src3,"Walla")) {
+
+            for (int i=0; i < 5; i++) {
+                WebElement chat = wallaScoopTitle.get(4-i);
+                String chatTime = wallaScoopTime.get(4-i).getText();
+
+                String chatDate = wallaScoopDate.get(0).getText();
+                String chatTitle = wallaScoopTitle.get(4-i).getText();
+                title=chatTitle.substring(8, chatTitle.length());
+
+                if (title.length()>0)
+                {title=replaceMore(title);}
+
+                //  chatDate = date + " " + chatTime;
+                System.out.println("Walla - "+i+" "+title);
+                System.out.println("chatDate " + chatDate+" "+"chatTime " + chatTime);
+                System.out.println("WALLA 2 - "+(chatTitle.length()-8));
+                mongoInsertData("Walla", chatDate, chatTime, title, i + 6,"NULL", "NULL", src2);
+            }
+        } else {
+            for (int i = 0; i < 5; i++) {
+                String chatTime = wallaScoopTime.get(4-i).getText();
+                String chatDate = wallaScoopDate.get(0).getText();
+                String chatTitle = wallaScoopTitle.get(4-i).getText();
+                title=chatTitle.substring(8, chatTitle.length());
+
+                title=replaceMore(title);
+               System.out.println("Walla - "+i+" "+title);
+                //  chatDate = date + " " + chatTime;
+                System.out.println("chatDate " + chatDate+" "+"chatTime " + chatTime);
+                System.out.println("WALLA 2 - "+title);
+                mongoUpdateData("Walla", chatDate, chatTime, title, i + 6,"NULL", "NULL", src2);
+            }
+        }
     }
 
    @Test
@@ -523,12 +591,13 @@ public class chatTest extends BaseTest {
        if ((sumTotal<15)&&(sumTotal>10)) {
            db.getCollection(src2).drop();
            test01_ynetChat();
-           test02_n12Chat();
+         //  test02_n12Chat();
+           test02_Walla();
            driver.get(RotterScoop);
            Thread.sleep(1000);
 
        }
-   System.out.println("Rotte - "+dropTable(15, src3,"Rotter"));
+   System.out.println("Rotter - "+dropTable(15, src3,"Rotter"));
        if (!dropTable(15, src3,"Rotter")) {
 
            for (int i=0; i < 5; i++) {
@@ -573,7 +642,8 @@ public class chatTest extends BaseTest {
             if ((sumTotal<20)&&(sumTotal>15))
             { db.getCollection(src2).drop();
                 test01_ynetChat();
-                test02_n12Chat();
+                //test02_n12Chat();
+                test02_Walla();
                 test03_Rotter();
                 driver.get(hamalSite);}
 
@@ -666,7 +736,8 @@ public class chatTest extends BaseTest {
             if ((sumTotal < 25) && (sumTotal > 20)) {
                 db.getCollection(src2).drop();
                 test01_ynetChat();
-                test02_n12Chat();
+                //test02_n12Chat();
+                test02_Walla();
                 test03_Rotter();
                 test04_Hamal();
                 driver.get(maarivChat);
