@@ -63,6 +63,7 @@ public class chatTest extends BaseTest {
     private String WallaScoop="https://news.walla.co.il/breaking";
     private String RotterScoop="https://rotter.net/forum/listforum.php";
     private String maarivChat = "https://www.maariv.co.il/breaking-news";
+    private String now14="https://www.now14.co.il/tag/%D7%9E%D7%91%D7%96%D7%A7%D7%99%D7%9D/#518837";
 
     By ynetMainChat = By.cssSelector("div.Accordion");
     By ynetAd = By.cssSelector("div#closemaavron");
@@ -72,6 +73,14 @@ public class chatTest extends BaseTest {
     By wallaScoop=By.cssSelector("h1.breaking-item-title");
     By wallaTime=By.cssSelector("h1.breaking-item-title span.red-time");
     By wallaDate=By.cssSelector("div.header-titles h2");
+
+    //ערוץ 14
+     //מבזקים משני - div.archive-posts.mibzakim-archive
+
+
+    By now14MainScoop=By.cssSelector("div#home-first-section");
+    By noe14Scoop=By.cssSelector("div.content-zone h2");
+    By now14Time=By.cssSelector("div.right-section div.time");
 
     By RotterMainScoop=By.xpath("/html/body/table[5]/tbody/tr/td[2]/table/tbody/tr/td/table[2]");
             // By.cssSelector("table[cellspacing='0'] table[cellspacing='1']");
@@ -309,10 +318,10 @@ public class chatTest extends BaseTest {
         Date date = new Date();
         return String.copyValueOf(formatter.format(date).toCharArray());
     }
-/*   @Test
+   @Test
         public  void test00_dropTable()  {
            db.getCollection(src2).drop();
-    }*/
+    }
 
     @Test
     public  void test01_ynetChat() throws InterruptedException {
@@ -573,6 +582,7 @@ public class chatTest extends BaseTest {
         }
     }
 
+
    @Test
     public void test03_Rotter() throws Exception {
        driver.get(RotterScoop);
@@ -627,6 +637,73 @@ public class chatTest extends BaseTest {
            }
        }
     }
+
+
+    @Test
+    public  void test04_now14() throws Exception {
+
+
+        // db.getCollection(src2).drop();
+        boolean bTemp;
+
+        driver.get(now14);
+
+        String date = getDate();
+        driver.get(now14);
+        Thread.sleep(1500);
+        System.out.println("now14 - "+driver.getCurrentUrl());
+
+        WebElement now14Main = driver.findElement(now14MainScoop);
+        List<WebElement> now14ScoopTitle = now14Main.findElements(noe14Scoop);
+        List<WebElement> now14ScoopTime=now14Main.findElements(now14Time);
+
+        System.out.println("rotterScoopTitle - "+now14ScoopTitle.size());
+        // System.out.println("rotterScoopTime - "+rotterScoopTime.size());
+        // System.out.println("rotterScoopDate - "+rotterScoopDate.size());
+        System.out.println("now14 Size " + now14ScoopTitle.size());
+        System.out.println("sumTotal 3 - "+sumTotal);
+        if ((sumTotal<20)&&(sumTotal>15)) {
+            db.getCollection(src2).drop();
+            test01_ynetChat();
+            //  test02_n12Chat();
+            test02_Walla();
+            test03_Rotter();
+            driver.get(now14);
+            Thread.sleep(1000);
+
+        }
+        System.out.println("Now14 - "+dropTable(20, src3,"Now14"));
+        if (!dropTable(20, src3,"Rotter")) {
+
+            for (int i=0; i < 5; i++) {
+                WebElement chat = now14ScoopTitle.get(4-i);
+                String chatTime = now14ScoopTime.get(4-i).getText();
+                String chatDate = date;
+                String chatTitle = now14ScoopTitle.get(4-i).getText();
+
+                if (chatTitle.length()>0)
+                {chatTitle=replaceMore(chatTitle);}
+
+                //  chatDate = date + " " + chatTime;
+                System.out.println("chatDate " + chatDate+" "+"chatTime " + chatTime);
+                mongoInsertData("now14", chatDate, chatTime, chatTitle, i + 11,"NULL", "NULL", src3);
+            }
+        } else {
+            for (int i = 0; i < 5; i++) {
+                WebElement chat = now14ScoopTitle.get(4-i);
+                String chatTime = now14ScoopTime.get(4-i).getText();
+                String chatDate = date;
+                String chatTitle = now14ScoopTitle.get(4-i).getText();
+
+                chatTitle=replaceMore(chatTitle);
+
+                //  chatDate = date + " " + chatTime;
+                System.out.println("chatDate " + chatDate+" "+"chatTime " + chatTime);
+                mongoUpdateData("now14", chatDate, chatTime, chatTitle, i + 11,"NULL", "NULL", src3);
+            }
+        }
+    }
+
     @Test
     public void test04_Hamal() throws Exception {
         driver.get(hamalSite);
@@ -739,7 +816,8 @@ public class chatTest extends BaseTest {
                 //test02_n12Chat();
                 test02_Walla();
                 test03_Rotter();
-                test04_Hamal();
+              //  test04_Hamal();
+                test04_now14();
                 driver.get(maarivChat);
             }
         }
